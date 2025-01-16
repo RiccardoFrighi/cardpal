@@ -15,9 +15,9 @@ import {
     NavbarMenu,
     Button
 } from "@heroui/react";
-import {LogoTextless, Logo} from "../Logo/Logos.jsx";
+import {LogoTextless} from "../Logo/Logos.jsx";
 import TCGListData from "../../assets/data/tcgs"
-import {MagnifyingGlassIcon} from "@heroicons/react/16/solid/index.js";
+import {MagnifyingGlassIcon, Bars3Icon, XMarkIcon} from "@heroicons/react/16/solid/index.js";
 import {ChevronDownIcon} from "@heroicons/react/16/solid/index.js";
 
 
@@ -77,6 +77,7 @@ const Header = (props) => {
                 <NavbarMenuToggle
                     aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                     className="sm:hidden"
+                    icon={isMenuOpen ? <XMarkIcon /> : <Bars3Icon />}
                 />
             </NavbarContent>
 

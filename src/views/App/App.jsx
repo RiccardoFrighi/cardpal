@@ -48,7 +48,7 @@ function App() {
 export default App
 
 /*
-<SingleCardResult id={"xy1-1"}
+<SingleSetCard id={"xy1-1"}
 name={"Venusaur-EX"}
 number={"1"}
 image={"https://images.pokemontcg.io/xy1/1_hires.png"}

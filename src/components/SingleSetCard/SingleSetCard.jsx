@@ -2,9 +2,9 @@ import {NavLink} from "react-router-dom";
 import {Card, Image} from "@heroui/react";
 import {pokemonDefaultImage, zeroPad} from "../../utility/utility";
 import PropTypes from "prop-types";
-import style from "./SingleCardResult.module.css";
+import style from "./SingleSetCard.module.css";
 
-const SingleCardResult = (props) => {
+const SingleSetCard = (props) => {
     const {id, name, number, image, rarity, price} = props;
 
     return (
@@ -33,9 +33,9 @@ const SingleCardResult = (props) => {
     )
 }
 
-export default SingleCardResult;
+export default SingleSetCard;
 
-SingleCardResult.propTypes = {
+SingleSetCard.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     number: PropTypes.string.isRequired,
