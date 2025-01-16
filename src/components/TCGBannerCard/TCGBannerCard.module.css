@@ -1,0 +1,8 @@
+.comingSoonBox {
+    display: flex;
+    padding: 4px 12px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    background: #FFD026;;
+}
