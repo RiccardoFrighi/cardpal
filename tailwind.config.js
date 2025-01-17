@@ -12,6 +12,8 @@ export default {
     colors: {
       'red-orange': '#fe4a22',
       'yellow-sunglow': '#ffd026',
+      'onyx': '#383838',
+      'light-silver': '#d9d9d9'
     }
   },
   darkMode: "class",

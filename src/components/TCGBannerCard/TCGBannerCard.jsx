@@ -8,7 +8,7 @@ const TCGBannerCard = (props) => {
     const { text, image, url, active, } = props;
 
     return (
-        <NavLink to={active ? url : "#"} className="w-fit block" >
+        <NavLink to={active ? url : "#"} className={`w-fit block ${!active ? 'cursor-default' : ''}`} >
             <Card className="w-fit border-none">
                 <CardHeader className="absolute z-20 top-1 flex-col !items-end">
                     {!active ?
@@ -32,5 +32,8 @@ const TCGBannerCard = (props) => {
 export default TCGBannerCard;
 
 TCGBannerCard.propTypes = {
-    item: PropTypes.shape({})
+    text: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    active: PropTypes.bool.isRequired,
+    url: PropTypes.string.isRequired
 }

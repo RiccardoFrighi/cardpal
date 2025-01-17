@@ -15,7 +15,7 @@ import {
     NavbarMenu,
     Button
 } from "@heroui/react";
-import {LogoTextless} from "../Logo/Logos.jsx";
+import {LogoTextless} from "../Logos/Logos.jsx";
 import TCGListData from "../../assets/data/tcgs"
 import {MagnifyingGlassIcon, Bars3Icon, XMarkIcon} from "@heroicons/react/16/solid/index.js";
 import {ChevronDownIcon} from "@heroicons/react/16/solid/index.js";
