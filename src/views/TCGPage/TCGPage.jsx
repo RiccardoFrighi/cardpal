@@ -125,5 +125,6 @@ const TCGPage = (props) => {
 export default TCGPage;
 
 TCGPage.propTypes = {
-    tcgName: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    location: PropTypes.object.isRequired,
 }

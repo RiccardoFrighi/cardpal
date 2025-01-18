@@ -1,5 +1,4 @@
 import './App.css'
-import React from "react";
 import {useNavigate, useHref, Routes, Route} from "react-router-dom";
 import { HeroUIProvider} from "@heroui/react";
 import MainTemplate from "../../components/MainTemplate/MainTemplate.jsx";
