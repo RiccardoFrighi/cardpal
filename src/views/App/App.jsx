@@ -1,12 +1,10 @@
 import './App.css'
 import React from "react";
 import {useNavigate, useHref, Routes, Route} from "react-router-dom";
-import {DropdownItem, HeroUIProvider} from "@heroui/react";
+import { HeroUIProvider} from "@heroui/react";
 import MainTemplate from "../../components/MainTemplate/MainTemplate.jsx";
-import TCGBannerCard from "../../components/TCGBannerCard/TCGBannerCard.jsx";
-import TCGListData from "../../assets/data/tcgs"
-import TCGBannerGrid from "../../components/TCGBannerGrid/TCGBannerGrid.jsx";
 import Home from "../Home/Home.jsx";
+import TCGPage from "../TCGPage/TCGPage.jsx";
 
 /*
 declare module "@react-types/shared" {
@@ -39,6 +37,7 @@ function App() {
             >
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/tcg/pokemon" element={<TCGPage name={"Pokémon"} logo={"../src/assets/images/pokemon-logo.png"}/>} />
                 </Routes>
             </MainTemplate>
         </HeroUIProvider>

@@ -1,9 +1,9 @@
 import {Card, CardHeader, Image} from "@heroui/react";
 import {NavLink} from "react-router-dom";
 import PropTypes from "prop-types";
-import style from "./TCGBannerCard.module.css";
+import style from "./TCGBannerGridCard.module.css";
 
-const TCGBannerCard = (props) => {
+const TCGBannerGridCard = (props) => {
 
     const { text, image, url, active, } = props;
 
@@ -29,9 +29,9 @@ const TCGBannerCard = (props) => {
     )
 }
 
-export default TCGBannerCard;
+export default TCGBannerGridCard;
 
-TCGBannerCard.propTypes = {
+TCGBannerGridCard.propTypes = {
     text: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     active: PropTypes.bool.isRequired,

@@ -21,7 +21,7 @@ const SingleSetCard = (props) => {
             </Card>
             <div className={style.cardContainer}>
                 <div className="flex flex-row justify-between" >
-                    <p className="text-base font-semibold">{name}</p>
+                    <h3 className="text-base font-semibold">{name}</h3>
                     <p className="text-base font-semibold text-red-500" >${price}</p>
                 </div>
                 <div className="flex flex-row justify-between">
