@@ -1,6 +1,5 @@
 import TCGListData from "../../assets/data/tcgs.json";
 import TCGBannerGridCard from "./TCGBannerGridCard.jsx";
-import React from "react";
 
 const TCGBannerGrid = () => {
 

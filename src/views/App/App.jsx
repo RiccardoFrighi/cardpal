@@ -4,6 +4,7 @@ import { HeroUIProvider} from "@heroui/react";
 import MainTemplate from "../../components/MainTemplate/MainTemplate.jsx";
 import Home from "../Home/Home.jsx";
 import TCGPage from "../TCGPage/TCGPage.jsx";
+import SingleSetPage from "../SingleSetPage/SingleSetPage.jsx";
 
 /*
 declare module "@react-types/shared" {
@@ -37,6 +38,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/tcg/pokemon" element={<TCGPage name={"Pokémon"} logo={"../src/assets/images/pokemon-logo.png"}/>} />
+                    <Route path="/tcg/pokemon/:id" element={<SingleSetPage />} />
                 </Routes>
             </MainTemplate>
         </HeroUIProvider>

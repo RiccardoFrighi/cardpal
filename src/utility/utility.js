@@ -7,3 +7,8 @@ export const getPokemonImage = (id) => `https://raw.githubusercontent.com/Hybrid
 export const pokemonDefaultImage = (onErrorEvent) =>  onErrorEvent.target.src = PokemonBack;
 
 export const zeroPad = (num, places) => String(num).padStart(places, '0');
+
+export const formatUSDollar = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+});

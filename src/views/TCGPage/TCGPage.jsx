@@ -1,7 +1,7 @@
 import { useEffect, useState} from "react";
 import TCGSerieGroup from "../../components/TCGSerie/TCGSerieGroup.jsx";
-import { Image, Card } from "@heroui/react";
 import PropTypes from "prop-types";
+import TCGSerieGroupLoading from "../../components/TCGSerie/TCGSerieGroupLoading.jsx";
 
 const TCGPage = (props) => {
 
@@ -59,63 +59,39 @@ const TCGPage = (props) => {
 
     const groupedAndSortedSets = groupAndSortSetsBySeries(data);
 
-    if (error) return <p>Error: {error}</p>;
-
-
     return (
-        <div className="p-16 flex flex-col gap-y-4">
-            <div className="flex flex-row gap-4 h-16">
-                <Image src={logo}
-                       alt={`${name} Logo`}
-                       className="object-contain w-full h-full"
-                       loading={"lazy"}
-                />
-                <div className="flex flex-col items-start justify-center">
-                    <h1 className="text-xl font-semibold text-foreground text-start">{name}</h1>
-                    <p className="text-sm font-medium text-foreground-500 leading-6">
-                        <span className="text-base font-semibold text-foreground text-start">{totalSets}</span> sets
-                    </p>
+        <div className="py-16 lg:px-16 flex flex-col gap-y-4">
+            <section className="flex flex-col sm:flex-row gap-4 mb-4">
+                <div className="relative h-[64px] w-full sm:w-40">
+                    <img src={logo}
+                         alt={`${name} Logo`}
+                         className="object-contain w-full h-full"
+                         loading={"lazy"}
+                    />
                 </div>
-            </div>
+                <div className="flex flex-col items-center sm:items-start gap-x-1 py-1.5">
+                    <h1 className="text-xl font-semibold text-foreground text-start">{name}</h1>
+                    <div className="flex flex-row items-center gap-x-1">
+                        <span className="text-base font-semibold text-foreground text-start">{totalSets} <span
+                            className="text-xs text-foreground-500 leading-6">cards</span>
+                        </span>
+                    </div>
+                </div>
+            </section>
             <section className="mt-8 flex flex-col gap-12">
                 {loading ?
-                    <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 xl:px-0 w-full">
-                        <Card>
-                            <Image
-                                src={"https://app.requestly.io/delay/5000/https://heroui.com/images/hero-card-complete.jpeg"}
-                                alt={"Loading..."}
-                                height={160}
-                            />
-                        </Card>
-                        <Card>
-                            <Image
-                                src={"https://app.requestly.io/delay/5000/https://heroui.com/images/hero-card-complete.jpeg"}
-                                alt={"Loading..."}
-                                height={160}
-                            />
-                        </Card>
-                        <Card>
-                            <Image
-                                src={"https://app.requestly.io/delay/5000/https://heroui.com/images/hero-card-complete.jpeg"}
-                                alt={"Loading..."}
-                                height={160}
-                            />
-                        </Card>
-                        <Card>
-                            <Image
-                                src={"https://app.requestly.io/delay/5000/https://heroui.com/images/hero-card-complete.jpeg"}
-                                alt={"Loading..."}
-                                height={160}
-                            />
-                        </Card>
-                    </section>
+                    <TCGSerieGroupLoading/>
                     :
-                    Object.keys(groupedAndSortedSets).reverse().map((series) => (
-                        <TCGSerieGroup key={series}
-                                       name={series}
-                                       serie={groupedAndSortedSets[series]}
-                        />
-                    ))
+                    (error ?
+                            <p>Error: {error}</p>
+                            :
+                            Object.keys(groupedAndSortedSets).reverse().map((series) => (
+                                <TCGSerieGroup key={series}
+                                               name={series}
+                                               serie={groupedAndSortedSets[series]}
+                                />
+                            ))
+                    )
                 }
             </section>
         </div>
