@@ -1,5 +1,4 @@
 import SingleSetCard from "../SingleSetCard/SingleSetCard.jsx";
-import React from "react";
 import PropTypes from "prop-types";
 
 const CardsGrid = (props) => {

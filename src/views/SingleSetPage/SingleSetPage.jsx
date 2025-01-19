@@ -1,4 +1,3 @@
-import {Image} from "@heroui/react";
 import {useEffect, useState} from "react";
 import {NavLink, useParams} from "react-router-dom";
 import {reverseDate} from "../../utility/utility.js";
