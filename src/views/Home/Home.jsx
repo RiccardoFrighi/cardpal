@@ -1,8 +1,17 @@
 import {Input} from "@heroui/react";
 import TCGBannerGrid from "../../components/TCGBannerGrid/TCGBannerGrid.jsx";
 import {MagnifyingGlassIcon} from "@heroicons/react/16/solid/index.js";
+import {useRef, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const Home = () => {
+
+    const [userInput, setUserInput] = useState("null");
+    const navigate = useNavigate();
+
+    const handleEnter = () => {
+        navigate(`/search?q=${userInput}`)
+    }
 
     return (
         <div className="container mx-auto my-20">
@@ -28,6 +37,11 @@ const Home = () => {
                 size="md"
                 startContent={<MagnifyingGlassIcon className="size-6"/>}
                 type="search"
+                onValueChange={(value) => setUserInput(value)}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter")
+                        handleEnter();
+                }}
             />
             <TCGBannerGrid/>
         </div>

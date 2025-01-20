@@ -42,6 +42,7 @@ const TCGPage = (props) => {
             return acc;
         }, {});
 
+
         for (const series in groupedData) {
             groupedData[series].sort((a, b) => {
                 const dateA = new Date(a.releaseDate);
