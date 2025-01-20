@@ -1,7 +1,7 @@
 import {Input} from "@heroui/react";
 import TCGBannerGrid from "../../components/TCGBannerGrid/TCGBannerGrid.jsx";
 import {MagnifyingGlassIcon} from "@heroicons/react/16/solid/index.js";
-import {useRef, useState} from "react";
+import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 const Home = () => {
