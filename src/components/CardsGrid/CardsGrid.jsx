@@ -21,6 +21,6 @@ const CardsGrid = (props) => {
 export default CardsGrid;
 
 CardsGrid.propTypes = {
-    setId: PropTypes.func.isRequired,
+    setId: PropTypes.string.isRequired,
     cards: PropTypes.array.isRequired
 }

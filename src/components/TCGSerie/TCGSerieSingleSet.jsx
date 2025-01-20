@@ -6,11 +6,20 @@ import styles from "./TCGSerie.module.css";
 
 const TCGSerieSingleSet = (props) => {
 
-    const { id, name, images, releaseDate } = props;
+    const { id, name, images, releaseDate, totalCards } = props;
     let location = useLocation()
 
     return (
-        <NavLink to={`${location.pathname}/${id.valueOf()}`} id={id} className="flex flex-col gap-2">
+        <NavLink id={id}
+                 to={`${location.pathname}/${id.valueOf()}`}
+                 state={{
+                     id: id,
+                     name: name,
+                     images: images,
+                     releaseDate: releaseDate,
+                     totalCards: totalCards
+                 }}
+                 className="flex flex-col gap-2">
             <Card className={styles.singleSetImageContainer} >
                 <CardBody>
                     <img src={images.logo}
@@ -34,4 +43,5 @@ TCGSerieSingleSet.propTypes = {
     name: PropTypes.string.isRequired,
     images: PropTypes.object.isRequired,
     releaseDate: PropTypes.string.isRequired,
+    totalCards: PropTypes.number.isRequired,
 }

@@ -102,5 +102,5 @@ export default TCGPage;
 
 TCGPage.propTypes = {
     name: PropTypes.string.isRequired,
-    logo: PropTypes.object.isRequired,
+    logo: PropTypes.string.isRequired,
 }

@@ -157,5 +157,5 @@ const Header = (props) => {
 export default Header;
 
 Navbar.propTypes = {
-    navItems: PropTypes.array.isRequired
+    navItems: PropTypes.array
 }

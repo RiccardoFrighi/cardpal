@@ -5,6 +5,7 @@ import MainTemplate from "../../components/MainTemplate/MainTemplate.jsx";
 import Home from "../Home/Home.jsx";
 import TCGPage from "../TCGPage/TCGPage.jsx";
 import SingleSetPage from "../SingleSetPage/SingleSetPage.jsx";
+import {pokemonLogo} from "../../utility/utility.js";
 
 /*
 declare module "@react-types/shared" {
@@ -37,7 +38,7 @@ function App() {
             >
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/tcg/pokemon" element={<TCGPage name={"Pokémon"} logo={"../src/assets/images/pokemon-logo.png"}/>} />
+                    <Route path="/tcg/pokemon" element={<TCGPage name={"Pokémon"} logo={pokemonLogo}/>} />
                     <Route path="/tcg/pokemon/:id" element={<SingleSetPage />} />
                 </Routes>
             </MainTemplate>

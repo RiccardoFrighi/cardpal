@@ -15,6 +15,7 @@ const TCGSerieGroup = (props) => {
                                        name={set.name}
                                        images={set.images}
                                        releaseDate={set.releaseDate}
+                                       totalCards={set.printedTotal}
                     />
                 ))}
             </section>
