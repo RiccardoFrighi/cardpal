@@ -36,10 +36,6 @@ const CardsTable = (props) => {
 
     const navigate = useNavigate();
 
-    function getStringBeforeDash(input) {
-        return input.slice(0, input.indexOf("-"));
-    }
-
     return (
         <Table aria-label="Cards table" className="w-full">
             <TableHeader>

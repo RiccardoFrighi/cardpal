@@ -7,7 +7,6 @@ import {
     NavbarContent,
     NavbarItem,
     NavbarMenuToggle,
-    Input,
     DropdownItem,
     DropdownTrigger,
     Dropdown,
@@ -17,7 +16,7 @@ import {
 } from "@heroui/react";
 import {LogoTextless} from "../Logos/Logos.jsx";
 import TCGListData from "../../assets/data/tcgs"
-import {MagnifyingGlassIcon, Bars3Icon, XMarkIcon} from "@heroicons/react/16/solid/index.js";
+import {Bars3Icon, XMarkIcon} from "@heroicons/react/16/solid/index.js";
 import {ChevronDownIcon} from "@heroicons/react/16/solid/index.js";
 
 
@@ -141,5 +140,5 @@ const Header = (props) => {
 export default Header;
 
 Navbar.propTypes = {
-    navItems: PropTypes.array
+    navItems: PropTypes.array.isRequired,
 }
