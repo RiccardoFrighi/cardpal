@@ -8,7 +8,7 @@ import unimib from "../../assets/images/unimib.png";
 const Footer = () => {
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-40 mx-6 mt-6 mb-4 px-10 py-6 items-start justify-between border-1 rounded-3xl bg-onyx">
+        <footer className="flex flex-col md:flex-row gap-6 md:gap-40 mx-6 mt-16 mb-4 px-10 py-6 items-start justify-between rounded-3xl bg-onyx">
             <div className="flex items-center md:items-start flex-col">
                 <NavLink exact={true}
                          to={"/"}
@@ -32,7 +32,6 @@ const Footer = () => {
                     GitHub Page
                 </Button>
             </div>
-
             <div className="flex items-center md:items-end flex-col mt-2 md:pr-2">
                 <p className={`text-center md:text-end greyText mb-4` }>Project created for the course of <span className="font-medium">
                         <Link className="greyText" underline={"always"} isExternal href={"https://elearning.unimib.it/course/info.php?id=57873#en"}>
@@ -58,7 +57,7 @@ const Footer = () => {
                     </Link>
                 </div>
             </div>
-        </div>
+        </footer>
     )
 }
 

@@ -34,18 +34,20 @@ function App() {
 
     return (
         <HeroUIProvider navigate={navigate} useHref={useHref}>
-            <MainTemplate
-                navItems={nav}
-            >
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/tcg/pokemon" element={<TCGPage name={"Pokémon"} logo={pokemonLogo}/>} />
-                    <Route path="/tcg/pokemon/:id" element={<SingleSetPage />} />
-                    <Route path="/search" element={<SearchResultsPage />} />
-                </Routes>
-            </MainTemplate>
+            <main className="light text-foreground bg-background">
+                <MainTemplate
+                    navItems={nav}
+                >
+                    <Routes>
+                        <Route path="/" element={<Home/>}/>
+                        <Route path="/tcg/pokemon" element={<TCGPage name={"Pokémon"} logo={pokemonLogo}/>}/>
+                        <Route path="/tcg/pokemon/:id" element={<SingleSetPage/>}/>
+                        <Route path="/search" element={<SearchResultsPage/>}/>
+                    </Routes>
+                </MainTemplate>
+            </main>
         </HeroUIProvider>
-    )
+)
 }
 
 export default App

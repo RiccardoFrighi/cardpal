@@ -20,7 +20,7 @@ const TCGSerieSingleSet = (props) => {
                      totalCards: totalCards
                  }}
                  className="flex flex-col gap-2">
-            <Card className={styles.singleSetImageContainer} >
+            <Card className={`${styles.singleSetImageContainer} ${true ? "bg-white" : "bg-content2"}`} >
                 <CardBody>
                     <img src={images.logo}
                            alt={name}

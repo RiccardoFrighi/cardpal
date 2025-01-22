@@ -4,7 +4,14 @@
 
 #root {
     padding: 0 !important;
+    max-width: 100% !important;
 }
+
+#main {
+    max-width: 1440px !important;
+}
+
+
 
 .greyText {
     color: #D9D9D9;

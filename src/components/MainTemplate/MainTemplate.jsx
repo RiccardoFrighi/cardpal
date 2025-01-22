@@ -9,7 +9,7 @@ const MainTemplate = (props) => {
     return (
         <div className="flex flex-col min-h-screen">
             <Header navItems={navItems} />
-            <div className="flex-grow px-8" >
+            <div className="flex flex-grow justify-center w-full max-w-screen-xl self-center px-8" >
 
                 {children}
 

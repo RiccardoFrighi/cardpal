@@ -61,7 +61,7 @@ const TCGPage = (props) => {
     const groupedAndSortedSets = groupAndSortSetsBySeries(data);
 
     return (
-        <div className="py-16 lg:px-16 flex flex-col gap-y-4">
+        <div className="py-16 lg:px-16 flex flex-col gap-y-4 w-full">
             <section className="flex flex-col sm:flex-row gap-4 mb-4">
                 <div className="relative h-[64px] w-full sm:w-40">
                     <img src={logo}

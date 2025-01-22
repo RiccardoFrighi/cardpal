@@ -2,6 +2,7 @@ import {useState, useEffect} from "react";
 import {useSearchParams} from "react-router-dom";
 import CardsGrid from "../../components/CardsGrid/CardsGrid.jsx";
 import CardsGridLoading from "../../components/CardsGrid/CardsGridLoading.jsx";
+import {Tabs, Tab} from "@heroui/react";
 
 const SearchResultsPage = () => {
 
@@ -35,9 +36,9 @@ const SearchResultsPage = () => {
 
     return (
         <div className="py-16 lg:px-16 flex flex-col gap-y-4">
-            <section>
+            <section className="h-20">
                 <div className="flex flex-col items-center sm:items-start gap-x-1 py-1.5">
-                    <h1 className="text-xl font-semibold text-foreground text-start">"{query}"</h1>
+                    <h1 className="text-3xl font-semibold text-foreground text-start">"{query}"</h1>
                     <div className="flex flex-row items-center gap-x-1">
                         <span className="text-base font-semibold text-foreground text-start">{results.length} <span
                             className="text-xs text-foreground-500 leading-6">search results</span>
@@ -45,16 +46,24 @@ const SearchResultsPage = () => {
                     </div>
                 </div>
             </section>
-            <section>
-                {loading ?
-                    <CardsGridLoading/>
-                    :
-                    (error ?
-                            <p>Error</p>
+            <section className="flex flex-col items-end gap-2">
+                <Tabs isDisabled={loading}
+                      className={`${(!loading && (error || results.length===0) ? "hidden" : "")}`}>
+                    <Tab key="grid" title="Grid">
+                        {loading ?
+                            <CardsGridLoading/>
                             :
-                            <CardsGrid cards={results}/>
-                    )
-                }
+                            (error ?
+                                <p>Error</p>
+                            :
+                                <CardsGrid cards={results}/>
+                            )
+                        }
+                    </Tab>
+                    <Tab key="table" title="Table">
+
+                    </Tab>
+                </Tabs>
             </section>
         </div>
     )

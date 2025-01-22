@@ -22,16 +22,10 @@ const SingleSetCard = (props) => {
             const priceKeys = Object.keys(prices);
 
             if (priceKeys.length > 0) {
-                // Ordina le chiavi alfanumericamente
-                priceKeys.sort();
-
-                // Prendi l'ultima chiave
-                const lastKey = priceKeys[priceKeys.length - 1];
-
                 // Controlla che l'oggetto corrispondente alla chiave esista e contenga 'market'
-                const lastPriceObject = prices[lastKey];
-                if (lastPriceObject && typeof lastPriceObject.market !== "undefined") {
-                    return lastPriceObject.market; // Restituisci il valore 'market'
+                const priceObject = prices[priceKeys[0]];
+                if (priceObject && typeof priceObject.market !== "undefined") {
+                    return priceObject.market; // Restituisci il valore 'market'
                 }
             }
         }

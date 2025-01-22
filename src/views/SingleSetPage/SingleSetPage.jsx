@@ -4,6 +4,8 @@ import CardsGrid from "../../components/CardsGrid/CardsGrid.jsx";
 import SingleSetHeader from "../../components/SingleSetHeader/SingleSetHeader.jsx";
 import CardsGridLoading from "../../components/CardsGrid/CardsGridLoading.jsx";
 import SingleSetHeaderLoading from "../../components/SingleSetHeader/SingleSetHeaderLoading.jsx";
+import {Tab, Tabs} from "@heroui/react";
+import CardsTable from "../../components/CardsTable/CardsTable.jsx";
 
 
 const SingleSetPage = () => {
@@ -55,6 +57,7 @@ const SingleSetPage = () => {
     // Render della UI
     if (error) return <p>Errore: {error}</p>;
 
+    /*
     return (
         <div className="py-16 lg:px-16 flex flex-col">
             {loading ?
@@ -83,6 +86,48 @@ const SingleSetPage = () => {
             }
         </div>
     );
+     */
+
+    return (
+        <div className="py-16 lg:px-16 flex flex-col gap-y-4">
+            <section>
+                {loading ?
+                    <SingleSetHeaderLoading/>
+                    :
+                    (error ?
+                            <p>Error: {error}</p>
+                            :
+                            <SingleSetHeader tcgName={"Pokémon"}
+                                             setName={setData.name}
+                                             images={setData.images}
+                                             totalCards={setData.total}
+                                             releaseDate={setData.releaseDate}
+                            />
+                    )
+                }
+            </section>
+            <section className="flex flex-col items-end gap-2">
+                <Tabs isDisabled={loading}
+                      className={`${(!loading && (error || cardsData.length === 0) ? "hidden" : "")}`}>
+                    <Tab key="grid" title="Grid">
+                        {loading ?
+                            <CardsGridLoading/>
+                            :
+                            (error ?
+                                    <p>Error</p>
+                                    :
+                                    <CardsGrid cards={cardsData}/>
+                            )
+                        }
+                    </Tab>
+                    <Tab key="table" title="Table">
+                        <CardsTable cards={cardsData} className="w-full"/>
+                    </Tab>
+
+                </Tabs>
+            </section>
+    </div>
+);
 };
 
 export default SingleSetPage;
