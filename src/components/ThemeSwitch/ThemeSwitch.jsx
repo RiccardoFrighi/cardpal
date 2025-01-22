@@ -17,7 +17,7 @@ const ThemeSwitch = () => {
 
     return (
         <Switch
-            defaultSelected={theme==="light" ? false : true}
+            defaultSelected={theme !== "light"}
             startContent={<SunIcon />}
             endContent={<MoonIcon />}
             onValueChange={changeTheme}

@@ -9,7 +9,6 @@ const TCGSerieSingleSet = (props) => {
 
     const { id, name, images, releaseDate, totalCards } = props;
     let location = useLocation()
-    const {theme} = useTheme()
 
     return (
         <NavLink id={id}

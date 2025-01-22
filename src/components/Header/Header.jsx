@@ -12,22 +12,20 @@ import {
     Dropdown,
     DropdownMenu,
     NavbarMenu,
-    Button,
-    Switch, cn
+    Button
 } from "@heroui/react";
 import {LogoTextless} from "../Logos/Logos.jsx";
 import TCGListData from "../../assets/data/tcgs"
-import {Bars3Icon, XMarkIcon, MoonIcon, SunIcon} from "@heroicons/react/16/solid/index.js";
+import {Bars3Icon, XMarkIcon} from "@heroicons/react/16/solid/index.js";
 import {ChevronDownIcon} from "@heroicons/react/16/solid/index.js";
-import {useTheme} from "@heroui/use-theme";
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch.jsx";
 
 
 const Header = (props) => {
 
+    // eslint-disable-next-line react/prop-types
     const { navItems } = props;
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const {theme, setTheme} = useTheme();
 
     // Creates the url to be disabled in the dropdown menu
     const inactiveUrls = TCGListData.filter(item => !item.active).map(item => item.url);
