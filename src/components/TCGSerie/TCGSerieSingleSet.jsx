@@ -3,11 +3,13 @@ import PropTypes from "prop-types";
 import {NavLink, useLocation} from "react-router-dom";
 import {Card, CardBody} from "@heroui/react";
 import styles from "./TCGSerie.module.css";
+import {useTheme} from "@heroui/use-theme";
 
 const TCGSerieSingleSet = (props) => {
 
     const { id, name, images, releaseDate, totalCards } = props;
     let location = useLocation()
+    const {theme} = useTheme()
 
     return (
         <NavLink id={id}
@@ -20,7 +22,7 @@ const TCGSerieSingleSet = (props) => {
                      totalCards: totalCards
                  }}
                  className="flex flex-col gap-2">
-            <Card className={`${styles.singleSetImageContainer} ${true ? "bg-white" : "bg-content2"}`} >
+            <Card className={`${styles.singleSetImageContainer} bg-content1`} >
                 <CardBody>
                     <img src={images.logo}
                            alt={name}

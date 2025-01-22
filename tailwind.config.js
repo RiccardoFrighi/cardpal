@@ -12,7 +12,7 @@ module.exports = {
     colors: {
       'red-orange': '#fe4a22',
       'yellow-sunglow': '#ffd026',
-      'onyx': '#383838',
+      'onyx': '#1a1a1a',
       'light-silver': '#d9d9d9'
     }
   },
@@ -31,6 +31,7 @@ module.exports = {
           },
           dark: {
             colors: {
+              background: '#0f0f0f',
               primary: {
                 DEFAULT: "#fe4a22",
                 foreground: "white",

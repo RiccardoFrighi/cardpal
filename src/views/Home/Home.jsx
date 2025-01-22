@@ -6,11 +6,12 @@ import {useNavigate} from "react-router-dom";
 
 const Home = () => {
 
-    const [userInput, setUserInput] = useState("null");
+    const [userInput, setUserInput] = useState("");
     const navigate = useNavigate();
 
-    const handleEnter = () => {
+    const submitSearchInput = () => {
         navigate(`/search?q=${userInput}`)
+        setUserInput("")
     }
 
     return (
@@ -20,7 +21,8 @@ const Home = () => {
                     The <span className="text-red-orange">Ultimate</span> TCG Platform
                 </h1>
                 <h2 className="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
-                    Explore, track, and keep alive your passion for TCGs with tools designed for every trainer, strategist, or collector.
+                    Explore, track, and keep alive your passion for TCGs with tools designed for every trainer,
+                    strategist, or collector.
                 </h2>
                 <Input
                     classNames={{
@@ -35,10 +37,11 @@ const Home = () => {
                     size="md"
                     startContent={<MagnifyingGlassIcon className="size-6"/>}
                     type="search"
-                    onValueChange={(value) => setUserInput(value)}
+                    value={userInput}
+                    onValueChange={setUserInput}
                     onKeyDown={(e) => {
                         if (e.key === "Enter")
-                            handleEnter();
+                            submitSearchInput();
                     }}
                 />
             </div>

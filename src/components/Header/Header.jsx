@@ -12,18 +12,22 @@ import {
     Dropdown,
     DropdownMenu,
     NavbarMenu,
-    Button
+    Button,
+    Switch, cn
 } from "@heroui/react";
 import {LogoTextless} from "../Logos/Logos.jsx";
 import TCGListData from "../../assets/data/tcgs"
-import {Bars3Icon, XMarkIcon} from "@heroicons/react/16/solid/index.js";
+import {Bars3Icon, XMarkIcon, MoonIcon, SunIcon} from "@heroicons/react/16/solid/index.js";
 import {ChevronDownIcon} from "@heroicons/react/16/solid/index.js";
+import {useTheme} from "@heroui/use-theme";
+import ThemeSwitch from "../ThemeSwitch/ThemeSwitch.jsx";
 
 
 const Header = (props) => {
 
     const { navItems } = props;
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const {theme, setTheme} = useTheme();
 
     // Creates the url to be disabled in the dropdown menu
     const inactiveUrls = TCGListData.filter(item => !item.active).map(item => item.url);
@@ -65,73 +69,73 @@ const Header = (props) => {
 
     return (
         <Navbar onMenuOpenChange={setIsMenuOpen}>
-            <NavbarContent justify="start">
-                <NavbarBrand className="mr-4">
+            <NavbarContent justify="start flex-grow-0">
+                <NavbarMenuToggle
+                    aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                    className="sm:hidden"
+                    icon={isMenuOpen ? <XMarkIcon /> : <Bars3Icon />}
+                />
+                <NavbarBrand className="mr-6">
                     <NavLink exact={true}
                              to={"/"}
                              className="nav-link">
                         <LogoTextless />
                     </NavLink>
                 </NavbarBrand>
-                <NavbarMenuToggle
-                    aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-                    className="sm:hidden"
-                    icon={isMenuOpen ? <XMarkIcon /> : <Bars3Icon />}
-                />
+                <NavbarContent className="hidden sm:flex gap-8" justify="center">
+                    <NavbarItem key={"/"}>
+                        <NavLink exact={true}
+                                 to={"/"}
+                                 className="nav-link">
+                            Home
+                        </NavLink>
+                    </NavbarItem>
+                    <Dropdown>
+                        <NavbarItem>
+                            <DropdownTrigger>
+                                <Button
+                                    disableRipple
+                                    className="text-base text-inherit p-0 bg-transparent data-[hover=true]:bg-transparent"
+                                    radius="sm"
+                                    variant="light"
+                                    endContent={<ChevronDownIcon className="size-6" size={16} />}
+                                >
+                                    TCGs
+                                </Button>
+                            </DropdownTrigger>
+                        </NavbarItem>
+                        <DropdownMenu
+                            aria-label="TCGs"
+                            className="w-[340px] gap-4"
+                            disabledKeys={inactiveUrls}
+                        >
+                            { dropdownItems }
+                        </DropdownMenu>
+                    </Dropdown>
+                    <NavbarItem key={"/docs"}>
+                        <NavLink exact={true}
+                                 to={"/docs"}
+                                 className="nav-link">
+                            Docs
+                        </NavLink>
+                    </NavbarItem>
+                    <NavbarItem key={"/info"}>
+                        <NavLink exact={true}
+                                 to={"/info"}
+                                 className="nav-link">
+                            Infos
+                        </NavLink>
+                    </NavbarItem>
+                </NavbarContent>
             </NavbarContent>
 
-            <NavbarContent className="hidden sm:flex gap-4" justify="center">
-                <NavbarItem key={"/"}>
-                    <NavLink exact={true}
-                             to={"/"}
-                             className="nav-link">
-                        Home
-                    </NavLink>
-                </NavbarItem>
-                <Dropdown>
-                    <NavbarItem>
-                        <DropdownTrigger>
-                            <Button
-                                disableRipple
-                                className="text-base text-inherit p-0 bg-transparent data-[hover=true]:bg-transparent"
-                                radius="sm"
-                                variant="light"
-                                endContent={<ChevronDownIcon className="size-6 fill-inherit fill-orange-500" size={16} />}
-                            >
-                                TCGs
-                            </Button>
-                        </DropdownTrigger>
-                    </NavbarItem>
-                    <DropdownMenu
-                        aria-label="ACME features"
-                        className="w-[340px]"
-                        disabledKeys={inactiveUrls}
-                        itemClasses={{
-                            base: "gap-4",
-                        }}
-                    >
-                        { dropdownItems }
-                    </DropdownMenu>
-                </Dropdown>
-                <NavbarItem key={"/docs"}>
-                    <NavLink exact={true}
-                             to={"/docs"}
-                             className="nav-link">
-                        Docs
-                    </NavLink>
-                </NavbarItem>
-                <NavbarItem key={"/info"}>
-                    <NavLink exact={true}
-                             to={"/info"}
-                             className="nav-link">
-                        Info
-                    </NavLink>
-                </NavbarItem>
-            </NavbarContent>
+            <ThemeSwitch />
 
             <NavbarMenu>
                 {itemList}
             </NavbarMenu>
+
+
 
         </Navbar>
     );

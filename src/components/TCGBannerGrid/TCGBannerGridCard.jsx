@@ -13,7 +13,7 @@ const TCGBannerGridCard = (props) => {
                 <CardHeader className="absolute z-20 top-1 flex-col !items-end">
                     {!active ?
                         <div className={style.comingSoonBox}>
-                            <p className="text-tiny  text-black/100 font-regular">Coming soon</p>
+                            <p className="text-tiny text-black/100 font-regular">Coming soon</p>
                         </div>
                     :
                         ""

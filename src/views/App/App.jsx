@@ -7,6 +7,7 @@ import TCGPage from "../TCGPage/TCGPage.jsx";
 import SingleSetPage from "../SingleSetPage/SingleSetPage.jsx";
 import {pokemonLogo} from "../../utility/utility.js";
 import SearchResultsPage from "../SearchResultsPage/SearchResultsPage.jsx";
+import {useTheme} from "@heroui/use-theme";
 
 /*
 declare module "@react-types/shared" {
@@ -19,6 +20,7 @@ declare module "@react-types/shared" {
 function App() {
 
     const navigate = useNavigate();
+    const {theme} = useTheme();
 
     const nav = [
         {url: "/", text: "Home", active: true, exact: true},
@@ -32,9 +34,13 @@ function App() {
         {url: "/info", text: "Info", active: true, exact: true}
     ];
 
+    console.log("Theme:"+theme);
+
     return (
-        <HeroUIProvider navigate={navigate} useHref={useHref}>
-            <main className="light text-foreground bg-background">
+        <HeroUIProvider navigate={navigate} useHref={useHref} attribute="class"
+                        defaultTheme="light"
+                        themes={['light', 'dark']}>
+            <main className={`${theme} text-foreground bg-background`}>
                 <MainTemplate
                     navItems={nav}
                 >
