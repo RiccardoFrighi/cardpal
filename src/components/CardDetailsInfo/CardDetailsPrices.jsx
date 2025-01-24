@@ -18,7 +18,6 @@ const CardDetailsPrices = (props) => {
 
     ];
 
-
     return (
         <div className={"w-full flex flex-col gap-4"}>
             <Table aria-label="Prices table">
@@ -27,7 +26,7 @@ const CardDetailsPrices = (props) => {
                         <TableColumn key={column.key}>{column.label}</TableColumn>
                     )}
                 </TableHeader>
-                <TableBody emptyContent={"No rows to display."}>
+                <TableBody emptyContent={"No prices were found."}>
                     {(tcgplayer && tcgplayer.prices) ?
                         (Object.entries(tcgplayer.prices).map((price) => (
                             <TableRow key={price.id}>

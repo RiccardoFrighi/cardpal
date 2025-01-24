@@ -1,4 +1,3 @@
-import {useEffect, useState} from "react";
 import {NavLink, useParams} from "react-router-dom";
 import CardsGrid from "../../components/CardsGrid/CardsGrid.jsx";
 import SingleSetHeader from "../../components/SingleSetHeader/SingleSetHeader.jsx";
@@ -6,57 +5,15 @@ import CardsGridLoading from "../../components/CardsGrid/CardsGridLoading.jsx";
 import SingleSetHeaderLoading from "../../components/SingleSetHeader/SingleSetHeaderLoading.jsx";
 import {BreadcrumbItem, Breadcrumbs, Tab, Tabs} from "@heroui/react";
 import CardsTable from "../../components/CardsTable/CardsTable.jsx";
+import useGetSingleSetCards from "../../hooks/useGetSingleSetCards.jsx";
+import useGetSingleSet from "../../hooks/useGetSingleSet.jsx";
 
 
 const SingleSetPage = () => {
 
-    const {id} = useParams(); // Prende l'id dal URL
-    const [setData, setSetData] = useState(null);
-    const [cardsData, setCardsData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchSetAndCards = async () => {
-            try {
-                setLoading(true);
-
-                // URL per il set e le carte
-                const setUrl = `https://api.pokemontcg.io/v2/sets/${id}`;
-                const cardsUrl = `https://api.pokemontcg.io/v2/cards?q=set.id:${id}`;
-
-                // Fetch parallelo
-                const [setResponse, cardsResponse] = await Promise.all([
-                    fetch(setUrl),
-                    fetch(cardsUrl),
-                ]);
-
-                // Controllo errori nelle risposte
-                if (!setResponse.ok || !cardsResponse.ok) {
-                    throw new Error("Errore durante il recupero dei dati.");
-                }
-
-                // Parsing delle risposte
-                const setData = await setResponse.json();
-                const cardsData = await cardsResponse.json();
-
-                // Aggiornamento stato
-                setSetData(setData.data);
-                setCardsData(cardsData.data.sort((a, b) => a.number.localeCompare(b.number, undefined, { numeric: true })));
-
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchSetAndCards();
-    }, [id]); // Esegui di nuovo se cambia l'id
-
-    // Render della UI
-    if (error) return <p>Error: {error}</p>;
-
+    const {id} = useParams(); // Gets id from URL
+    const {set, loading, error} = useGetSingleSet(id);
+    const {setCards, setCardsLoading, setCardsError} = useGetSingleSetCards(id);
 
     return (
         <div className="py-16 lg:px-16 flex flex-col gap-y-4 w-full">
@@ -74,42 +31,42 @@ const SingleSetPage = () => {
                     </NavLink>
                 </BreadcrumbItem>
                 {(!loading && !error) ?
-                    <BreadcrumbItem>{setData.name}</BreadcrumbItem>
+                    <BreadcrumbItem>{set.name}</BreadcrumbItem>
                 :
                     ""}
             </Breadcrumbs>
             <section>
-                {loading ?
+                {(loading || setCardsLoading)?
                     <SingleSetHeaderLoading/>
                     :
-                    (error ?
+                    ((error || setCardsError) ?
                             <p>Error: {error}</p>
                             :
                             <SingleSetHeader tcgName={"Pokémon"}
-                                             setName={setData.name}
-                                             images={setData.images}
-                                             totalCards={setData.total}
-                                             releaseDate={setData.releaseDate}
+                                             setName={set.name}
+                                             images={set.images}
+                                             totalCards={set.total}
+                                             releaseDate={set.releaseDate}
                             />
                     )
                 }
             </section>
             <section className="flex flex-col items-end gap-2">
                 <Tabs isDisabled={loading}
-                      className={`${(!loading && (error || cardsData.length === 0) ? "hidden" : "")}`}>
+                      className={`${(!loading && (error || setCards.length === 0) ? "hidden" : "")}`}>
                     <Tab key="grid" title="Grid">
-                        {loading ?
+                        {(loading || setCardsLoading) ?
                             <CardsGridLoading/>
                             :
-                            (error ?
+                            ((error || setCardsError) ?
                                     <p>Error</p>
                                     :
-                                    <CardsGrid cards={cardsData}/>
+                                    <CardsGrid cards={setCards}/>
                             )
                         }
                     </Tab>
                     <Tab key="table" title="Table" className={"w-full"}>
-                        <CardsTable cards={cardsData} fromSearch={false} />
+                        <CardsTable cards={setCards} fromSearch={false} />
                     </Tab>
 
                 </Tabs>

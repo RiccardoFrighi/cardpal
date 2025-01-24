@@ -35,8 +35,6 @@ function App() {
         {url: "/info", text: "Info", active: true, exact: true}
     ];
 
-    console.log("Theme:"+theme);
-
     return (
         <HeroUIProvider navigate={navigate} useHref={useHref} attribute="class"
                         defaultTheme="light"

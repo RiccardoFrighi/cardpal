@@ -3,42 +3,36 @@
     "url": "tcg/pokemon",
     "text": "Pokémon",
     "active": true,
-    "exact": false,
     "image": "src/assets/images/pokemon-banner.png"
   },
   {
     "url": "tcg/lorcana",
     "text": "Lorcana",
     "active": false,
-    "exact": false,
     "image": "src/assets/images/lorcana-banner.png"
   },
   {
     "url": "tcg/one-piece",
     "text": "One Piece",
     "active": false,
-    "exact": false,
     "image": "src/assets/images/onepiece-banner.png"
   },
   {
     "url": "tcg/magic",
     "text": "Magic",
     "active": false,
-    "exact": false,
     "image": "src/assets/images/magic-banner.png"
   },
   {
     "url": "tcg/yugioh",
     "text": "Yu-gi-oh!",
     "active": false,
-    "exact": false,
     "image": "src/assets/images/yugioh-banner.png"
   },
   {
     "url": "tcg/starwars",
     "text": "Star Wars Unlimited",
     "active": false,
-    "exact": false,
     "image": "src/assets/images/starwars-banner.png"
   }
 ]

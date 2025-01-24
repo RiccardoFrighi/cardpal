@@ -34,18 +34,18 @@ const Header = (props) => {
     const itemList = navItems.map((item) => {
         return (
             <NavbarItem key={item.url} >
-                <NavLink exact={item.exact}
-                         to={item.active ? item.url : "#"}
+                <NavLink to={item.active ? item.url : "#"}
                          className={`nav-link ${!item.active ? 'cursor-default' : ''}`}>
-                    <>
+                    <div>
                         <span className={`${!item.active ? 'w-full text-foreground-500' : ''}`}>{item.text} </span>
-                    {!item.active ?
-                    <span className="w-full text-tiny text-foreground-500 group-hover:text-current truncate" >
-                        Coming soon
-                    </span>
-                    : ""
-                }
-                    </>
+                            {!item.active ?
+                                <span className="w-full text-tiny text-foreground-500 group-hover:text-current truncate" >
+                                    Coming soon
+                                </span>
+                            :
+                                ""
+                         }
+                    </div>
                 </NavLink>
             </NavbarItem>
         )
@@ -56,8 +56,7 @@ const Header = (props) => {
         return (
             <DropdownItem key={item.url}
                           description={item.active ? "" : "Coming soon"}>
-                <NavLink exact={item.exact}
-                         to={item.active ? item.url : "#"}
+                <NavLink to={item.active ? item.url : "#"}
                          className={`nav-link ${!item.active ? 'cursor-default' : ''}`}>
                     {item.text}
                 </NavLink>

@@ -1,37 +1,13 @@
-import { useEffect, useState} from "react";
 import TCGSerieGroup from "../../components/TCGSerie/TCGSerieGroup.jsx";
 import PropTypes from "prop-types";
 import TCGSerieGroupLoading from "../../components/TCGSerie/TCGSerieGroupLoading.jsx";
 import {BreadcrumbItem, Breadcrumbs} from "@heroui/react";
+import useGetSets from "../../hooks/useGetSets.jsx";
 
 const TCGPage = (props) => {
 
     const { name, logo } = props;
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [totalSets, setTotalSets] = useState(0);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('https://api.pokemontcg.io/v2/sets?orderBy=releaseDate');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const result = await response.json();
-                setData(result.data); // `result.data` contiene i set.
-                setTotalSets(result.totalCount)
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, []);
-
+    const {sets, totalSets, loading, error} = useGetSets();
 
     function groupAndSortSetsBySeries(data) {
         const groupedData = data.reduce((acc, set) => {
@@ -59,7 +35,7 @@ const TCGPage = (props) => {
         return groupedData;
     }
 
-    const groupedAndSortedSets = groupAndSortSetsBySeries(data);
+    const groupedAndSortedSets = groupAndSortSetsBySeries(sets);
 
     return (
         <div className="py-16 lg:px-16 flex flex-col gap-y-4 w-full">

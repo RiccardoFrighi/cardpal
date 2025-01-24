@@ -1,36 +1,21 @@
 import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {Divider, Image} from "@heroui/react";
 import CardDetailsHeading from "../../components/CardDetailsInfo/CardDetailsHeading.jsx";
 import CardDetailsInfo from "../../components/CardDetailsInfo/CardDetailsInfo.jsx";
 import CardDetailsPrices from "../../components/CardDetailsInfo/CardDetailsPrices.jsx";
 import CardDetailsLoading from "../../components/CardDetailsInfo/CardDetailsLoading.jsx";
+import useGetCard from "../../hooks/useGetCard.jsx";
 
 const CardDetails = () => {
 
-    const {setId, cardId} = useParams();
-    const [card, setCard] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const {cardId} = useParams();
+    const {card, loading, error} = useGetCard(cardId);
 
+    // Resets the view to top of the page
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`https://api.pokemontcg.io/v2/cards/${cardId}`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const result = await response.json();
-                setCard(result.data);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [cardId]);
+        window.scrollTo(0, 0)
+    }, [])
 
     return (
         <div className="container mx-auto my-20">
@@ -55,8 +40,6 @@ const CardDetails = () => {
                             <CardDetailsPrices tcgplayer={card.tcgplayer} cardmarket={card.cardmarket} />
                             <Divider />
                             <CardDetailsInfo card={card} />
-
-
                         </section>
                     </div>
                 )
