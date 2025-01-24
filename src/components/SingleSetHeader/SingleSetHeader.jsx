@@ -29,7 +29,7 @@ const SingleSetHeader = (props) => {
                     <span className="mx-0.5 text-xs font-black text-foreground-500">•</span>
                     <span className="text-base font-semibold text-foreground text-start h-6">{totalCards} <span
                         className="text-xs text-foreground-500 leading-6">cards</span>
-                                </span>
+                    </span>
                     <span className="mx-0.5 text-xs font-black text-foreground-500">•</span>
                     <span
                         className="text-base font-semibold text-foreground text-start h-6">{reverseDate(releaseDate)} <span

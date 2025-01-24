@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {NavLink, useLocation} from "react-router-dom";
 import {Card, CardBody} from "@heroui/react";
 import styles from "./TCGSerie.module.css";
-import {useTheme} from "@heroui/use-theme";
 
 const TCGSerieSingleSet = (props) => {
 

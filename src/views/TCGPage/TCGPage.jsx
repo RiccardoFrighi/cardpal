@@ -2,6 +2,8 @@ import { useEffect, useState} from "react";
 import TCGSerieGroup from "../../components/TCGSerie/TCGSerieGroup.jsx";
 import PropTypes from "prop-types";
 import TCGSerieGroupLoading from "../../components/TCGSerie/TCGSerieGroupLoading.jsx";
+import {BreadcrumbItem, Breadcrumbs} from "@heroui/react";
+import {NavLink} from "react-router-dom";
 
 const TCGPage = (props) => {
 
@@ -62,6 +64,16 @@ const TCGPage = (props) => {
 
     return (
         <div className="py-16 lg:px-16 flex flex-col gap-y-4 w-full">
+            <Breadcrumbs key={"md"}
+                         size={"md"}
+                         className={"mb-4"}
+                         itemClasses={{
+                             item: "font-semibold data-[current=true]:text-foreground hover:text-foreground",
+                         }}
+            >
+                <BreadcrumbItem isDisabled>All TCGs</BreadcrumbItem>
+                <BreadcrumbItem>Pokemon</BreadcrumbItem>
+            </Breadcrumbs>
             <section className="flex flex-col sm:flex-row gap-4 mb-4">
                 <div className="relative h-[64px] w-full sm:w-40">
                     <img src={logo}

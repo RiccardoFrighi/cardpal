@@ -8,6 +8,7 @@ import SingleSetPage from "../SingleSetPage/SingleSetPage.jsx";
 import {pokemonLogo} from "../../utility/utility.js";
 import SearchResultsPage from "../SearchResultsPage/SearchResultsPage.jsx";
 import {useTheme} from "@heroui/use-theme";
+import CardDetails from "../CardDetails/CardDetails.jsx";
 
 /*
 declare module "@react-types/shared" {
@@ -49,6 +50,7 @@ function App() {
                         <Route path="/tcg/pokemon" element={<TCGPage name={"Pokémon"} logo={pokemonLogo}/>}/>
                         <Route path="/tcg/pokemon/:id" element={<SingleSetPage/>}/>
                         <Route path="/search" element={<SearchResultsPage/>}/>
+                        <Route path="tcg/pokemon/:setId/:cardId" element={<CardDetails/>} />
                     </Routes>
                 </MainTemplate>
             </main>

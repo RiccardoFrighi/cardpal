@@ -1,8 +1,9 @@
 import {useState, useEffect} from "react";
-import {useSearchParams} from "react-router-dom";
+import {NavLink, useSearchParams} from "react-router-dom";
 import CardsGrid from "../../components/CardsGrid/CardsGrid.jsx";
 import CardsGridLoading from "../../components/CardsGrid/CardsGridLoading.jsx";
-import {Tabs, Tab} from "@heroui/react";
+import {Tabs, Tab, BreadcrumbItem, Breadcrumbs} from "@heroui/react";
+import CardsTable from "../../components/CardsTable/CardsTable.jsx";
 
 const SearchResultsPage = () => {
 
@@ -26,7 +27,6 @@ const SearchResultsPage = () => {
                     setError(err.message);
                 } finally {
                     setLoading(false);
-                    console.log(results)
                 }
             };
 
@@ -35,7 +35,7 @@ const SearchResultsPage = () => {
     }, [query]);
 
     return (
-        <div className="py-16 lg:px-16 flex flex-col gap-y-4">
+        <div className="py-16 lg:px-16 flex flex-col gap-y-4 w-full">
             <section className="h-20">
                 <div className="flex flex-col items-center sm:items-start gap-x-1 py-1.5">
                     <h1 className="text-3xl font-semibold text-foreground text-start">"{query}"</h1>
@@ -60,8 +60,8 @@ const SearchResultsPage = () => {
                             )
                         }
                     </Tab>
-                    <Tab key="table" title="Table">
-
+                    <Tab key="table" title="Table" className={"w-full"}>
+                        <CardsTable cards={results} fromSearch={true} />
                     </Tab>
                 </Tabs>
             </section>

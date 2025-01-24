@@ -34,7 +34,9 @@ const ThemeSwitch = () => {
                     "bg-[white]",
                 ),
                 thumbIcon: "fill-black",
-                base:"bg-none"
+                base:"bg-none",
+                wrapper: cn(
+                    "group-data-[selected=true]:bg-[]"),
             }}
         />
     )

@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {NavLink, useParams} from "react-router-dom";
 import CardsGrid from "../../components/CardsGrid/CardsGrid.jsx";
 import SingleSetHeader from "../../components/SingleSetHeader/SingleSetHeader.jsx";
 import CardsGridLoading from "../../components/CardsGrid/CardsGridLoading.jsx";
 import SingleSetHeaderLoading from "../../components/SingleSetHeader/SingleSetHeaderLoading.jsx";
-import {Tab, Tabs} from "@heroui/react";
+import {BreadcrumbItem, Breadcrumbs, Tab, Tabs} from "@heroui/react";
 import CardsTable from "../../components/CardsTable/CardsTable.jsx";
 
 
@@ -55,41 +55,29 @@ const SingleSetPage = () => {
     }, [id]); // Esegui di nuovo se cambia l'id
 
     // Render della UI
-    if (error) return <p>Errore: {error}</p>;
+    if (error) return <p>Error: {error}</p>;
 
-    /*
+
     return (
-        <div className="py-16 lg:px-16 flex flex-col">
-            {loading ?
-                <>
-                    <SingleSetHeaderLoading/>
-                    <section className="mt-8 flex flex-col gap-12">
-                        <CardsGridLoading/>
-                    </section>
-                </>
-            :
-                (error ?
-                    <p>Error: {error}</p>
+        <div className="py-16 lg:px-16 flex flex-col gap-y-4 w-full">
+            <Breadcrumbs key={"md"}
+                         size={"md"}
+                         className={"mb-4"}
+                         itemClasses={{
+                             item: "font-semibold data-[current=true]:text-foreground hover:text-foreground",
+                         }}
+            >
+                <BreadcrumbItem isDisabled>All TCGs</BreadcrumbItem>
+                <BreadcrumbItem>
+                    <NavLink to={"/tcg/pokemon"}>
+                        Pokemon
+                    </NavLink>
+                </BreadcrumbItem>
+                {(!loading && !error) ?
+                    <BreadcrumbItem>{setData.name}</BreadcrumbItem>
                 :
-                    <>
-                        <SingleSetHeader tcgName={"Pokémon"}
-                                         setName={setData.name}
-                                         images={setData.images}
-                                         totalCards={setData.total}
-                                         releaseDate={setData.releaseDate}
-                        />
-                        <section className="mt-8 flex flex-col gap-12">
-                            <CardsGrid setId={setData.id} cards={cardsData}/>
-                        </section>
-                    </>
-                )
-            }
-        </div>
-    );
-     */
-
-    return (
-        <div className="py-16 lg:px-16 flex flex-col gap-y-4">
+                    ""}
+            </Breadcrumbs>
             <section>
                 {loading ?
                     <SingleSetHeaderLoading/>
@@ -120,8 +108,8 @@ const SingleSetPage = () => {
                             )
                         }
                     </Tab>
-                    <Tab key="table" title="Table">
-                        <CardsTable cards={cardsData} className="w-full"/>
+                    <Tab key="table" title="Table" className={"w-full"}>
+                        <CardsTable cards={cardsData} fromSearch={false} />
                     </Tab>
 
                 </Tabs>
