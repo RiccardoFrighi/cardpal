@@ -1,4 +1,4 @@
-import {Button, Form, Input} from "@heroui/react";
+import {Button, Input} from "@heroui/react";
 import TCGBannerGrid from "../../components/TCGBannerGrid/TCGBannerGrid.jsx";
 import {MagnifyingGlassIcon} from "@heroicons/react/16/solid/index.js";
 import {useState} from "react";
@@ -30,7 +30,7 @@ const Home = () => {
                     Explore, track, and keep alive your passion for TCGs with tools designed for every trainer,
                     strategist, or collector.
                 </h2>
-                <div className={" max-w-3xl w-full h-14 flex flex-row pr-2 items-center rounded-full h-full bg-default-400/20 dark:bg-default-500/20"}
+                <div className={"max-w-3xl w-full flex flex-row pr-2 items-center rounded-full bg-default-400/20 dark:bg-default-500/20"}
                 >
                     <Input
                         classNames={{
@@ -56,7 +56,7 @@ const Home = () => {
                             aria-label="Like"
                             color="primary"
                             radius="full"
-                            onClick={submitSearchInput}
+                            onPress={submitSearchInput}
                     >
                         <MagnifyingGlassIcon className="size-6" />
                     </Button>
