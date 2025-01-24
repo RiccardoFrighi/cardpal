@@ -1,8 +1,8 @@
 import {useState, useEffect} from "react";
-import {NavLink, useSearchParams} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 import CardsGrid from "../../components/CardsGrid/CardsGrid.jsx";
 import CardsGridLoading from "../../components/CardsGrid/CardsGridLoading.jsx";
-import {Tabs, Tab, BreadcrumbItem, Breadcrumbs} from "@heroui/react";
+import {Tabs, Tab} from "@heroui/react";
 import CardsTable from "../../components/CardsTable/CardsTable.jsx";
 
 const SearchResultsPage = () => {

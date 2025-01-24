@@ -3,7 +3,6 @@ import TCGSerieGroup from "../../components/TCGSerie/TCGSerieGroup.jsx";
 import PropTypes from "prop-types";
 import TCGSerieGroupLoading from "../../components/TCGSerie/TCGSerieGroupLoading.jsx";
 import {BreadcrumbItem, Breadcrumbs} from "@heroui/react";
-import {NavLink} from "react-router-dom";
 
 const TCGPage = (props) => {
 

@@ -51,7 +51,7 @@ const CardsTable = (props) => {
                                   className={"w-full"}>
                             <TableCell className={"w-20"}>
                                 <Link href={`/tcg/pokemon/${card.set.id}/${card.id}`}>
-                                    <img src={card.images.small} className={""}/>
+                                    <img src={card.images.small} alt={`${card.name} image`}  className={""}/>
                                 </Link>
                             </TableCell>
                             <TableCell>

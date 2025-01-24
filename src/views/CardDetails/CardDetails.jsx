@@ -1,7 +1,6 @@
-import {NavLink, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {Card, CardBody, Divider, Image, Link} from "@heroui/react";
-import {zeroPad} from "../../utility/utility.js";
+import {Divider, Image} from "@heroui/react";
 import CardDetailsHeading from "../../components/CardDetailsInfo/CardDetailsHeading.jsx";
 import CardDetailsInfo from "../../components/CardDetailsInfo/CardDetailsInfo.jsx";
 import CardDetailsPrices from "../../components/CardDetailsInfo/CardDetailsPrices.jsx";
