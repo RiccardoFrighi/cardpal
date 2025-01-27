@@ -1,4 +1,4 @@
-import {NavLink, useSearchParams} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 import CardsGrid from "../../components/CardsGrid/CardsGrid.jsx";
 import CardsGridLoading from "../../components/CardsGrid/CardsGridLoading.jsx";
 import {Tabs, Tab, Image, Link} from "@heroui/react";
