@@ -1,9 +1,10 @@
-import {useSearchParams} from "react-router-dom";
+import {NavLink, useSearchParams} from "react-router-dom";
 import CardsGrid from "../../components/CardsGrid/CardsGrid.jsx";
 import CardsGridLoading from "../../components/CardsGrid/CardsGridLoading.jsx";
-import {Tabs, Tab} from "@heroui/react";
+import {Tabs, Tab, Image, Link} from "@heroui/react";
 import CardsTable from "../../components/CardsTable/CardsTable.jsx";
 import useGetSearchResults from "../../hooks/useGetSearchResults.jsx";
+import ErrorBox from "../../components/ErrorBox/ErrorBox.jsx";
 
 const SearchResultsPage = () => {
 
@@ -23,7 +24,7 @@ const SearchResultsPage = () => {
                     </div>
                 </div>
             </section>
-            <section className="flex flex-col items-end gap-2">
+            <section className={`flex flex-col ${(loading || results.length>0 ) ? "items-end" : ""} ${(error || results.length===0 ) ? "items-center" : ""} gap-2 w-full}`}>
                 <Tabs isDisabled={loading}
                       className={`${(!loading && (error || results.length===0) ? "hidden" : "")}`}>
                     <Tab key="grid" title="Grid">
@@ -31,9 +32,20 @@ const SearchResultsPage = () => {
                             <CardsGridLoading/>
                             :
                             (error ?
-                                <div>Error</div>
-                            :
-                                <CardsGrid cards={results}/>
+                                    <ErrorBox />
+                                    :
+                                    (results.length > 0 ?
+                                            <CardsGrid cards={results}/>
+                                            :
+                                            <div
+                                                className={"flex flex-col items-center pt-8 text-2xl font-medium gap-6"}>
+                                            Looks like results we couldn&#39;t find any results for &#34;{query}&#34;
+                                                <Image src={"https://www.reactiongifs.com/r/2013/08/no-answer.gif"}
+                                                       alt=""
+                                        />
+                                        <Link href={"/"} className={"underline text-small"}>Back to Home</Link>
+                                    </div>
+                                )
                             )
                         }
                     </Tab>

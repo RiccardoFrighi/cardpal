@@ -3,11 +3,18 @@ import PropTypes from "prop-types";
 import TCGSerieGroupLoading from "../../components/TCGSerie/TCGSerieGroupLoading.jsx";
 import {BreadcrumbItem, Breadcrumbs} from "@heroui/react";
 import useGetSets from "../../hooks/useGetSets.jsx";
+import ErrorBox from "../../components/ErrorBox/ErrorBox.jsx";
+import {useEffect} from "react";
 
 const TCGPage = (props) => {
 
     const { name, logo } = props;
     const {sets, totalSets, loading, error} = useGetSets();
+
+    // Resets the view to top of the page
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
     function groupAndSortSetsBySeries(data) {
         const groupedData = data.reduce((acc, set) => {
@@ -49,7 +56,7 @@ const TCGPage = (props) => {
                 <BreadcrumbItem isDisabled>All TCGs</BreadcrumbItem>
                 <BreadcrumbItem>Pokemon</BreadcrumbItem>
             </Breadcrumbs>
-            <section className="flex flex-col sm:flex-row gap-4 mb-4">
+            <section className={`flex flex-col sm:flex-row gap-4 mb-4 ${error ? "hidden" : ""}`}>
                 <div className="relative h-[64px] w-full sm:w-40">
                     <img src={logo}
                          alt={`${name} Logo`}
@@ -71,7 +78,7 @@ const TCGPage = (props) => {
                     <TCGSerieGroupLoading/>
                     :
                     (error ?
-                            <p>Error: {error}</p>
+                            <ErrorBox />
                             :
                             Object.keys(groupedAndSortedSets).reverse().map((series) => (
                                 <TCGSerieGroup key={series}
