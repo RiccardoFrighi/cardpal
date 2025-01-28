@@ -1,16 +1,91 @@
+import React, {useState, useEffect} from "react";
 import {useSearchParams} from "react-router-dom";
 import CardsGrid from "../../components/CardsGrid/CardsGrid.jsx";
 import CardsGridLoading from "../../components/CardsGrid/CardsGridLoading.jsx";
-import {Tabs, Tab, Image, Link} from "@heroui/react";
+import {
+    useDisclosure,
+    Input,
+    Button,
+    Drawer,
+    DrawerContent,
+    DrawerHeader, DrawerBody, DrawerFooter, ButtonGroup
+} from "@heroui/react";
 import CardsTable from "../../components/CardsTable/CardsTable.jsx";
 import useGetSearchResults from "../../hooks/useGetSearchResults.jsx";
-import ErrorBox from "../../components/ErrorBox/ErrorBox.jsx";
+import {countActiveFilters, extractCardsFilterOptions, filterCards} from "../../components/Filters/filterFunctions.js";
+import {MagnifyingGlassIcon} from "@heroicons/react/16/solid/index.js";
+import {AdjustmentsHorizontalIcon} from "@heroicons/react/24/solid/index.js";
+import CardsFilters from "../../components/Filters/CardsFilters.jsx";
+
 
 const SearchResultsPage = () => {
 
     const [searchParams] = useSearchParams();
     const query = searchParams.get("q"); // Recupera il valore di "q" dall'URL
     const {results, loading, error} = useGetSearchResults(query.split(" ")[0]);
+
+    const [isGridView, setIsGridView] = React.useState(true);
+    const [cardsLoaded, setCardsLoaded] = useState(false);
+    const [userFilterInput, setUserFilterInput] = useState("")
+    const [filteredResults, setFilteredResults ] = useState()
+    const [filterOptions, setFilterOptions] = useState([])
+    const [activeFilters, setActiveFilters] = useState({
+        rarities: [],
+        supertypes: [],
+        subtypes: [],
+        types: []
+    });
+
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+
+    // Resets the view to top of the page
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
+    // Checks if the setCards are not empty, if so then the API call was successful we can update our filteredCards state
+    useEffect(() => {
+        if (!cardsLoaded && !loading && !error && results.length > 0) {
+            setFilteredResults(results);
+            setFilterOptions(extractCardsFilterOptions(results));
+        }
+
+        if(!cardsLoaded && results.length > 0) {
+            setCardsLoaded(true)
+        }
+
+    }, [results])
+
+    // Filters the setCards based on the userFilterInput entered
+    useEffect(() => {
+        const filteredItems = applyFilters()
+        setFilteredResults(filteredItems);
+    }, [userFilterInput, activeFilters])
+
+    // Applies the filters to the cards
+    const applyFilters = () => {
+        const filteredItems = results.filter((card) =>
+            card.name.toLowerCase().includes(userFilterInput.toLowerCase()))
+
+        return filterCards(filteredItems, activeFilters);
+    }
+
+    const handleApplyFilters = (filters) => {
+        let results = applyFilters(filteredResults, filters);
+        setFilteredResults(results);
+    };
+
+    const handleResetFilters = () => {
+        setFilteredResults(results);
+        setActiveFilters({
+            rarities: [],
+            supertypes: [],
+            subtypes: [],
+            types: []
+        })
+    };
+
+    const activeFiltersCount = countActiveFilters(activeFilters);
 
     return (
         <div className="py-16 lg:px-16 flex flex-col gap-y-4 w-full">
@@ -24,35 +99,98 @@ const SearchResultsPage = () => {
                     </div>
                 </div>
             </section>
-            <section className={`flex flex-col ${(loading || results.length>0 ) ? "items-end" : ""} ${(error || results.length===0 ) ? "items-center" : ""} gap-2 w-full}`}>
-                <Tabs isDisabled={loading}
-                      className={`${(!loading && (error || results.length===0) ? "hidden" : "")}`}>
-                    <Tab key="grid" title="Grid">
-                        {loading ?
-                            <CardsGridLoading/>
+            <section className="flex flex-col items-end gap-4">
+                {(loading || filterOptions.length === 0) ? "" :
+                    <div className={"w-full flex flex-col md:flex-row gap-2 md:gap-4"}>
+                        <Input
+                            isClearable
+                            type="search"
+                            name={"searchValue"}
+                            classNames={{
+                                base: "w-full md:max-w-xs h-10",
+                                listboxWrapper: "max-h-[40px]",
+                                selectorButton: "text-default-500",
+                                inputWrapper: "md:rounded-full"
+                            }}
+                            inputProps={{
+                                classNames: {
+                                    input: "ml-1",
+                                    inputWrapper: "h-[48px]",
+                                },
+                            }}
+                            value={userFilterInput}
+                            onValueChange={setUserFilterInput}
+                            placeholder="Search this set"
+                            startContent={<MagnifyingGlassIcon className="text-default-400 fill-primary" height={20}
+                                                               strokeWidth={2.5}/>}
+                            variant="faded"
+                        />
+                        <div className={"flex flex-row w-full justify-between"}>
+                            <Button onPress={onOpen}
+                                    radius={"full"}
+                                    className={"font-medium"}
+                                    startContent={<AdjustmentsHorizontalIcon className="fill-inherit w-5"/>}
+                            >
+                                Filters {activeFiltersCount > 0 ? `(${activeFiltersCount})` : ""}
+                            </Button>
+                            <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
+                                <DrawerContent>
+                                    {(onClose) => (
+                                        <>
+                                            <DrawerHeader
+                                                className="flex flex-col gap-1 text-2xl">Filters</DrawerHeader>
+                                            <DrawerBody>
+                                                <CardsFilters filterOptions={filterOptions}
+                                                              activeFilters={activeFilters}
+                                                              setActiveFilters={setActiveFilters}
+                                                              handleApplyFilters={handleApplyFilters}
+                                                />
+                                            </DrawerBody>
+                                            <DrawerFooter>
+                                                <Button color="danger" variant="light" onPress={handleResetFilters}>
+                                                    Reset Filters
+                                                </Button>
+                                                <Button color="primary" onPress={onClose}>
+                                                    Apply Filters
+                                                </Button>
+                                            </DrawerFooter>
+                                        </>
+                                    )}
+                                </DrawerContent>
+                            </Drawer>
+                            <ButtonGroup>
+                                <Button isDisabled={isGridView}
+                                        radius={"full"}
+                                        className={"font-medium"}
+                                        onPress={() => setIsGridView(!isGridView)}
+                                >
+                                    Grid
+                                </Button>
+                                <Button isDisabled={!isGridView}
+                                        radius={"full"}
+                                        className={"font-medium"}
+                                        onPress={() => setIsGridView(!isGridView)}
+                                >
+                                    Table
+                                </Button>
+                            </ButtonGroup>
+                        </div>
+                    </div>
+                }
+                {loading ?
+                    <CardsGridLoading/>
+                    :
+                    (error ?
+                            ""
                             :
-                            (error ?
-                                    <ErrorBox />
+                            (isGridView ?
+                                    <CardsGrid cards={filteredResults}/>
                                     :
-                                    (results.length > 0 ?
-                                            <CardsGrid cards={results}/>
-                                            :
-                                            <div
-                                                className={"flex flex-col items-center pt-8 text-2xl font-medium gap-6"}>
-                                            Looks like results we couldn&#39;t find any results for &#34;{query}&#34;
-                                                <Image src={"https://www.reactiongifs.com/r/2013/08/no-answer.gif"}
-                                                       alt=""
-                                        />
-                                        <Link href={"/"} className={"underline text-small"}>Back to Home</Link>
-                                    </div>
-                                )
+                                    <CardsTable cards={filteredResults}/>
                             )
-                        }
-                    </Tab>
-                    <Tab key="table" title="Table" className={"w-full"}>
-                        <CardsTable cards={results} fromSearch={true} />
-                    </Tab>
-                </Tabs>
+                    )
+                }
+
             </section>
         </div>
     )

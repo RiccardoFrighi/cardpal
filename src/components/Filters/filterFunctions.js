@@ -27,6 +27,30 @@ export const extractCardsFilterOptions = (cards) => {
     };
 };
 
+export const filterCards = (cards, activeFilters) => {
+
+    return cards.filter(card => {
+        // Check rarity filter
+        const matchesRarity = activeFilters.rarities.length === 0 ||
+            (card.rarity && activeFilters.rarities.includes(card.rarity));
+
+        // Check supertype filter
+        const matchesSupertype = activeFilters.supertypes.length === 0 ||
+            (card.supertype && activeFilters.supertypes.includes(card.supertype));
+
+        // Check subtype filter
+        const matchesSubtype = activeFilters.subtypes.length === 0 ||
+            (card.subtypes && card.subtypes.some(subtype => activeFilters.subtypes.includes(subtype)));
+
+        // Check type filter
+        const matchesType = activeFilters.types.length === 0 ||
+            (card.types && card.types.some(type => activeFilters.types.includes(type)));
+
+        return matchesRarity && matchesSupertype && matchesSubtype && matchesType;
+    })
+
+}
+
 export const countActiveFilters = (filters) => {
     return Object.values(filters).reduce((count, filterArray) => {
         if (Array.isArray(filterArray) && filterArray.length > 0) {

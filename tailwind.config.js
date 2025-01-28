@@ -26,6 +26,10 @@ module.exports = {
               primary: {
                 DEFAULT: "#fe4a22",
                 foreground: "white",
+              },
+              secondary: {
+                DEFAULT: "#ffd026",
+                foreground: "#0f0f0f",
               }
             }
           },
@@ -35,6 +39,10 @@ module.exports = {
               primary: {
                 DEFAULT: "#fe4a22",
                 foreground: "white",
+              },
+              secondary: {
+                DEFAULT: "#ffd026",
+                foreground: "#0f0f0f",
               }
             }
           }

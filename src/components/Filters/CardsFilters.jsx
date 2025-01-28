@@ -1,9 +1,9 @@
 import {Button} from "@heroui/react";
 import PropTypes from "prop-types";
 
-const SingleSetPageFilters  = (props) => {
+const CardsFilters  = (props) => {
 
-    const { filterOptions, activeFilters, setActiveFilters, handleApplyFilters } = props;
+    const {filterOptions, activeFilters, setActiveFilters, handleApplyFilters} = props;
 
     const handleChange = (filter, key) => {
         const prevState = activeFilters[key].includes(filter);
@@ -32,9 +32,8 @@ const SingleSetPageFilters  = (props) => {
                         <Button key={filter}
                                 size="sm"
                                 className={"font-medium"}
-                                color={activeFilters.rarities.includes(filter) ? "primary" : "default"}
+                                color={activeFilters.rarities.includes(filter) ? "secondary" : "default"}
                                 onPress={() => handleChange(filter, 'rarities')}
-
                         >{filter.toUpperCase()}</Button>
                     ))}
                 </div>
@@ -47,9 +46,8 @@ const SingleSetPageFilters  = (props) => {
                         <Button key={filter}
                                 size="sm"
                                 className={"font-medium"}
-                                color={activeFilters.supertypes.includes(filter) ? "primary" : "default"}
+                                color={activeFilters.supertypes.includes(filter) ? "secondary" : "default"}
                                 onPress={() => handleChange(filter, 'supertypes')}
-
                         >{filter.toUpperCase()}</Button>
                     ))}
                 </div>
@@ -62,9 +60,8 @@ const SingleSetPageFilters  = (props) => {
                         <Button key={filter}
                                 size="sm"
                                 className={"font-medium"}
-                                color={activeFilters.subtypes.includes(filter) ? "primary" : "default"}
+                                color={activeFilters.subtypes.includes(filter) ? "secondary" : "default"}
                                 onPress={() => handleChange(filter, 'subtypes')}
-
                         >{filter.toUpperCase()}</Button>
                     ))}
                 </div>
@@ -77,9 +74,8 @@ const SingleSetPageFilters  = (props) => {
                         <Button key={filter}
                                 size="sm"
                                 className={"font-medium"}
-                                color={activeFilters.types.includes(filter) ? "primary" : "default"}
+                                color={activeFilters.types.includes(filter) ? "secondary" : "default"}
                                 onPress={() => handleChange(filter, 'types')}
-
                         >{filter.toUpperCase()}</Button>
                     ))}
                 </div>
@@ -89,9 +85,9 @@ const SingleSetPageFilters  = (props) => {
     )
 }
 
-export default SingleSetPageFilters;
+export default CardsFilters;
 
-SingleSetPageFilters.propTypes = {
+CardsFilters.propTypes = {
     filterOptions: PropTypes.object.isRequired,
     activeFilters: PropTypes.object.isRequired,
     setActiveFilters: PropTypes.func.isRequired,

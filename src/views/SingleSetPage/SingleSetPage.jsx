@@ -23,8 +23,8 @@ import useGetSingleSet from "../../hooks/useGetSingleSet.jsx";
 import ErrorBox from "../../components/ErrorBox/ErrorBox.jsx";
 import {MagnifyingGlassIcon} from "@heroicons/react/16/solid/index.js";
 import {AdjustmentsHorizontalIcon} from "@heroicons/react/24/solid/index.js";
-import {countActiveFilters, extractCardsFilterOptions} from "../../components/Filters/filterFunctions.js";
-import SingleSetPageFilters from "../../components/Filters/SingleSetPageFilters.jsx";
+import {countActiveFilters, extractCardsFilterOptions, filterCards} from "../../components/Filters/filterFunctions.js";
+import CardsFilters from "../../components/Filters/CardsFilters.jsx";
 
 
 const SingleSetPage = () => {
@@ -73,32 +73,13 @@ const SingleSetPage = () => {
     }, [userFilterInput, activeFilters])
 
     // Applies the filters to the cards
-    function applyFilters() {
+    const applyFilters = () => {
         const filteredItems = setCards.filter((card) =>
             card.name.toLowerCase().includes(userFilterInput.toLowerCase()))
 
-        return filteredItems.filter(card => {
-            // Check rarity filter
-            const matchesRarity = activeFilters.rarities.length === 0 ||
-                (card.rarity && activeFilters.rarities.includes(card.rarity));
-
-
-            // Check supertype filter
-            const matchesSupertype = activeFilters.supertypes.length === 0 ||
-                (card.supertype && activeFilters.supertypes.includes(card.supertype));
-
-            // Check subtype filter
-            const matchesSubtype = activeFilters.subtypes.length === 0 ||
-                (card.subtypes && card.subtypes.some(subtype => activeFilters.subtypes.includes(subtype)));
-
-            // Check type filter
-            const matchesType = activeFilters.types.length === 0 ||
-                (card.types && card.types.some(type => activeFilters.types.includes(type)));
-
-            return matchesRarity && matchesSupertype && matchesSubtype && matchesType;
-
-        });
+        return filterCards(filteredItems, activeFilters);
     }
+
 
     const handleApplyFilters = (filters) => {
         let results = applyFilters(filteredCards, filters);
@@ -194,10 +175,10 @@ const SingleSetPage = () => {
                                     <>
                                         <DrawerHeader className="flex flex-col gap-1 text-2xl">Filters</DrawerHeader>
                                         <DrawerBody>
-                                            <SingleSetPageFilters filterOptions={filterOptions}
-                                                                  activeFilters={activeFilters}
-                                                                  setActiveFilters={setActiveFilters}
-                                                                  handleApplyFilters={handleApplyFilters}
+                                            <CardsFilters filterOptions={filterOptions}
+                                                          activeFilters={activeFilters}
+                                                          setActiveFilters={setActiveFilters}
+                                                          handleApplyFilters={handleApplyFilters}
                                             />
                                         </DrawerBody>
                                         <DrawerFooter>
