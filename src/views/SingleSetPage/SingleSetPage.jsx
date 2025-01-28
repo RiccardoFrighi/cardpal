@@ -9,14 +9,22 @@ import {
     Breadcrumbs,
     Button,
     ButtonGroup,
-    Input
+    Drawer,
+    DrawerBody,
+    DrawerContent,
+    DrawerFooter,
+    DrawerHeader,
+    Input,
+    useDisclosure,
 } from "@heroui/react";
 import CardsTable from "../../components/CardsTable/CardsTable.jsx";
 import useGetSingleSetCards from "../../hooks/useGetSingleSetCards.jsx";
 import useGetSingleSet from "../../hooks/useGetSingleSet.jsx";
 import ErrorBox from "../../components/ErrorBox/ErrorBox.jsx";
 import {MagnifyingGlassIcon} from "@heroicons/react/16/solid/index.js";
-
+import {AdjustmentsHorizontalIcon} from "@heroicons/react/24/solid/index.js";
+import {countActiveFilters, extractCardsFilterOptions} from "../../components/Filters/filterFunctions.js";
+import SingleSetPageFilters from "../../components/Filters/SingleSetPageFilters.jsx";
 
 
 const SingleSetPage = () => {
@@ -25,31 +33,89 @@ const SingleSetPage = () => {
     const {set, loading, error} = useGetSingleSet(id);
     const {setCards, setCardsLoading, setCardsError} = useGetSingleSetCards(id);
 
+    const [isGridView, setIsGridView] = React.useState(true);
+    const [cardsLoaded, setCardsLoaded] = useState(false);
     const [userFilterInput, setUserFilterInput] = useState("")
     const [filteredCards, setFilteredCards ] = useState()
-    const [isGridView, setIsGridView] = React.useState(true);
+    const [filterOptions, setFilterOptions] = useState([])
+    const [activeFilters, setActiveFilters] = useState({
+        rarities: [],
+        supertypes: [],
+        subtypes: [],
+        types: [],
+    });
+
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+
 
     // Resets the view to top of the page
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
 
-
-    // Checks if the users are not empty, if so then the
-    // API call was successful and we can update our filteredCards state
+    // Checks if the setCards are not empty, if so then the API call was successful we can update our filteredCards state
     useEffect(() => {
-        if (Object.keys(setCards).length > 0) {
-            setFilteredCards(setCards)
+        if (!cardsLoaded && !loading && !error && setCards.length > 0) {
+            setFilteredCards(setCards);
+            setFilterOptions(extractCardsFilterOptions(setCards));
         }
+
+        if(!cardsLoaded && setCards.length > 0) {
+            setCardsLoaded(true)
+        }
+
     }, [setCards])
 
-
+    // Filters the setCards based on the userFilterInput entered
     useEffect(() => {
-        const filteredItems = setCards.filter((card) =>
-            card.name.toLowerCase().includes(userFilterInput.toLowerCase())
-        )
+        const filteredItems = applyFilters()
         setFilteredCards(filteredItems);
-    }, [userFilterInput])
+    }, [userFilterInput, activeFilters])
+
+    // Applies the filters to the cards
+    function applyFilters() {
+        const filteredItems = setCards.filter((card) =>
+            card.name.toLowerCase().includes(userFilterInput.toLowerCase()))
+
+        return filteredItems.filter(card => {
+            // Check rarity filter
+            const matchesRarity = activeFilters.rarities.length === 0 ||
+                (card.rarity && activeFilters.rarities.includes(card.rarity));
+
+
+            // Check supertype filter
+            const matchesSupertype = activeFilters.supertypes.length === 0 ||
+                (card.supertype && activeFilters.supertypes.includes(card.supertype));
+
+            // Check subtype filter
+            const matchesSubtype = activeFilters.subtypes.length === 0 ||
+                (card.subtypes && card.subtypes.some(subtype => activeFilters.subtypes.includes(subtype)));
+
+            // Check type filter
+            const matchesType = activeFilters.types.length === 0 ||
+                (card.types && card.types.some(type => activeFilters.types.includes(type)));
+
+            return matchesRarity && matchesSupertype && matchesSubtype && matchesType;
+
+        });
+    }
+
+    const handleApplyFilters = (filters) => {
+        let results = applyFilters(filteredCards, filters);
+        setFilteredCards(results);
+    };
+
+    const handleResetFilters = () => {
+        setFilteredCards(setCards);
+        setActiveFilters({
+                rarities: [],
+                supertypes: [],
+                subtypes: [],
+                types: [],
+        })
+    };
+
+    const activeFiltersCount = countActiveFilters(activeFilters);
 
 
     return (
@@ -90,15 +156,17 @@ const SingleSetPage = () => {
                 }
             </section>
             <section className="flex flex-col items-end gap-4">
-                <div className={"w-full flex justify-between"}>
+                {(loading || setCardsLoading || filterOptions.length===0) ? "" :
+                <div className={"w-full flex flex-col md:flex-row gap-2 md:gap-4"}>
                     <Input
                         isClearable
                         type="search"
                         name={"searchValue"}
                         classNames={{
-                            base: "max-w-xs h-10",
+                            base: "w-full md:max-w-xs h-10",
                             listboxWrapper: "max-h-[40px]",
                             selectorButton: "text-default-500",
+                            inputWrapper: "md:rounded-full"
                         }}
                         inputProps={{
                             classNames: {
@@ -109,16 +177,60 @@ const SingleSetPage = () => {
                         value={userFilterInput}
                         onValueChange={setUserFilterInput}
                         placeholder="Search this set"
-                        radius="full"
                         startContent={<MagnifyingGlassIcon className="text-default-400 fill-primary" height={20} strokeWidth={2.5} />}
                         variant="faded"
                     />
-                    <ButtonGroup>
-                        <Button isDisabled={isGridView} onPress={() => setIsGridView(!isGridView)}>Grid</Button>
-                        <Button isDisabled={!isGridView} onPress={() => setIsGridView(!isGridView)}>Table</Button>
-                    </ButtonGroup>
-
+                    <div className={"flex flex-row w-full justify-between"}>
+                        <Button onPress={onOpen}
+                                radius={"full"}
+                                className={"font-medium"}
+                                startContent={<AdjustmentsHorizontalIcon className="fill-inherit w-5" />}
+                        >
+                            Filters {activeFiltersCount > 0 ? `(${activeFiltersCount})` : ""}
+                        </Button>
+                        <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
+                            <DrawerContent>
+                                {(onClose) => (
+                                    <>
+                                        <DrawerHeader className="flex flex-col gap-1 text-2xl">Filters</DrawerHeader>
+                                        <DrawerBody>
+                                            <SingleSetPageFilters filterOptions={filterOptions}
+                                                                  activeFilters={activeFilters}
+                                                                  setActiveFilters={setActiveFilters}
+                                                                  handleApplyFilters={handleApplyFilters}
+                                            />
+                                        </DrawerBody>
+                                        <DrawerFooter>
+                                            <Button color="danger" variant="light" onPress={handleResetFilters}>
+                                                Reset Filters
+                                            </Button>
+                                            <Button color="primary" onPress={onClose}>
+                                                Apply Filters
+                                            </Button>
+                                        </DrawerFooter>
+                                    </>
+                                )}
+                            </DrawerContent>
+                        </Drawer>
+                        <ButtonGroup>
+                            <Button isDisabled={isGridView}
+                                    radius={"full"}
+                                    className={"font-medium"}
+                                    onPress={() => setIsGridView(!isGridView)}
+                            >
+                                Grid
+                            </Button>
+                            <Button isDisabled={!isGridView}
+                                    radius={"full"}
+                                    className={"font-medium"}
+                                    onPress={() => setIsGridView(!isGridView)}
+                            >
+                                Table
+                            </Button>
+                        </ButtonGroup>
+                    </div>
                 </div>
+                }
                 {(loading || setCardsLoading) ?
                     <CardsGridLoading/>
                     :
