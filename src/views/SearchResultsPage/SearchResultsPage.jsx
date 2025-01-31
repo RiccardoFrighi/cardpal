@@ -16,6 +16,8 @@ import {countActiveFilters, extractCardsFilterOptions, filterCards} from "../../
 import {MagnifyingGlassIcon} from "@heroicons/react/16/solid/index.js";
 import {AdjustmentsHorizontalIcon} from "@heroicons/react/24/solid/index.js";
 import CardsFilters from "../../components/Filters/CardsFilters.jsx";
+import ErrorBox from "../../components/ErrorBox/ErrorBox.jsx";
+import EmptyFilteredResults from "../../components/Filters/EmptyFilteredResults.jsx";
 
 
 const SearchResultsPage = () => {
@@ -70,13 +72,16 @@ const SearchResultsPage = () => {
         return filterCards(filteredItems, activeFilters);
     }
 
+    // Applies the active filters
     const handleApplyFilters = (filters) => {
         let results = applyFilters(filteredResults, filters);
         setFilteredResults(results);
     };
 
+    // Resets the active filters
     const handleResetFilters = () => {
         setFilteredResults(results);
+        setUserFilterInput("")
         setActiveFilters({
             rarities: [],
             supertypes: [],
@@ -85,6 +90,7 @@ const SearchResultsPage = () => {
         })
     };
 
+    //Store the active filters count
     const activeFiltersCount = countActiveFilters(activeFilters);
 
     return (
@@ -181,13 +187,21 @@ const SearchResultsPage = () => {
                     <CardsGridLoading/>
                     :
                     (error ?
-                            ""
+                            <ErrorBox />
                             :
-                            (isGridView ?
-                                    <CardsGrid cards={filteredResults}/>
+                            <>
+                                {filteredResults.length === 0 &&
+                                (userFilterInput.length>0 || Object.values(activeFilters).some(arr => arr.length !== 0)) ?
+                                    <EmptyFilteredResults handleResetFilters={handleResetFilters} titleMessage={""} />
+                                :
+                                    (isGridView ?
+                                        <CardsGrid cards={filteredResults}/>
                                     :
-                                    <CardsTable cards={filteredResults}/>
-                            )
+                                        <CardsTable cards={filteredResults}/>
+                                    )
+                                }
+                            </>
+
                     )
                 }
 

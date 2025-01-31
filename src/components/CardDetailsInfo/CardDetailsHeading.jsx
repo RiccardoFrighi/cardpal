@@ -26,8 +26,9 @@ const CardDetailsHeading = (props) => {
             </div>
             <div className="flex flex-col items-start gap-1">
                 <h1 className={"text-3xl font-bold"}>{card.name}</h1>
-                <p className="text-xl font-semibold text-foreground-600 text-start">#{zeroPad(card.number, (card.set.total+'').length)}/{card.set.total}</p>
-
+                <p className="text-xl font-semibold text-foreground-600 text-start">
+                    #{zeroPad(card.number, (card.set.total+'').length)}/{card.set.total}
+                </p>
             </div>
         </section>
     )

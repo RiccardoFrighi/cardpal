@@ -27,11 +27,10 @@ const CardDetails = () => {
                 :
                     <div className="flex flex-col md:flex-row w-full">
                         <section className={"px-20 md:px-0 mb-10 md:mb-0 md:mr-8" }>
-                                <Image
-                                    alt={card.name}
-                                    src={card.images.large}
-                                />
-
+                            <Image
+                                alt={card.name}
+                                src={card.images.large}
+                            />
                         </section>
 
                         <section className={"w-full flex flex-col gap-y-8 items-start "}>

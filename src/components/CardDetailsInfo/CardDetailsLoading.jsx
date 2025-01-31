@@ -13,11 +13,9 @@ const CardDetailsLoading = () => {
                         alt={"Loading..."}
                         className={"opacity-0 w-full h-full"}
                         style={{opacity: 0}}
-
                     />
                 </Card>
             </section>
-
             <div className={"w-full flex flex-col gap-y-8 items-start "}>
                 <section className={"w-full flex flex-col gap-y-4 items-start "}>
                     <div className="flex flex-row items-center gap-2">

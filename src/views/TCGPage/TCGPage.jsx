@@ -1,48 +1,121 @@
 import TCGSerieGroup from "../../components/TCGSerie/TCGSerieGroup.jsx";
 import PropTypes from "prop-types";
 import TCGSerieGroupLoading from "../../components/TCGSerie/TCGSerieGroupLoading.jsx";
-import {BreadcrumbItem, Breadcrumbs} from "@heroui/react";
+import {
+    BreadcrumbItem,
+    Breadcrumbs,
+    Button,
+    Drawer,
+    DrawerBody,
+    DrawerContent, DrawerFooter,
+    DrawerHeader,
+    Input, useDisclosure
+} from "@heroui/react";
 import useGetSets from "../../hooks/useGetSets.jsx";
 import ErrorBox from "../../components/ErrorBox/ErrorBox.jsx";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import {MagnifyingGlassIcon} from "@heroicons/react/16/solid/index.js";
+import {AdjustmentsHorizontalIcon} from "@heroicons/react/24/solid/index.js";
+import {
+    countActiveFilters,
+    extractSetsFilterOptions,
+    filterSets
+} from "../../components/Filters/filterFunctions.js";
+import SetsFilters from "../../components/Filters/SetsFilters.jsx";
+import EmptyFilteredResults from "../../components/Filters/EmptyFilteredResults.jsx";
 
 const TCGPage = (props) => {
 
     const { name, logo } = props;
     const {sets, totalSets, loading, error} = useGetSets();
 
+    const [setsLoaded, setSetsLoaded] = useState(false);
+    const [userFilterInput, setUserFilterInput] = useState("")
+    const [filteredSets, setFilteredSets ] = useState([])
+    const [filterOptions, setFilterOptions] = useState([])
+    const [activeFilters, setActiveFilters] = useState({
+        series: [],
+        years: [],
+    });
+
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+
+
     // Resets the view to top of the page
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
 
+    // Checks if the setCards are not empty, if so then the API call was successful we can update our filteredCards state
+    useEffect(() => {
+        if (!setsLoaded && !loading && !error && sets.length > 0) {
+            setFilteredSets(sets);
+            setFilterOptions(extractSetsFilterOptions(sets));
+        }
+
+        if(!setsLoaded && sets.length > 0) {
+            setSetsLoaded(true)
+        }
+
+    }, [sets])
+
+    // Filters the setCards based on the userFilterInput entered
+    useEffect(() => {
+        const filteredItems = applyFilters()
+        setFilteredSets(filteredItems);
+    }, [userFilterInput, activeFilters])
+
+    // Applies the filters to the cards
+    const applyFilters = () => {
+        const filteredItems = sets.filter((card) =>
+            card.name.toLowerCase().includes(userFilterInput.toLowerCase()) || card.series.toLowerCase().includes(userFilterInput.toLowerCase()))
+
+        return filterSets(filteredItems, activeFilters);
+    }
+
+    // Applies the active filters
+    const handleApplyFilters = (filters) => {
+        let results = applyFilters(filteredSets, filters);
+        setFilteredSets(results);
+    };
+
+    // Resets the active filters
+    const handleResetFilters = () => {
+        setFilteredSets(sets);
+        setUserFilterInput("")
+        setActiveFilters({
+            series: [],
+            years: [],
+        })
+    };
+
+    // Stores the active filters count
+    const activeFiltersCount = countActiveFilters(activeFilters);
+
+    // Groups the sets by series
     function groupAndSortSetsBySeries(data) {
         const groupedData = data.reduce((acc, set) => {
-            const series = set.series; // Prendi la serie del set
+            const series = set.series;
             if (!acc[series]) {
-                acc[series] = []; // Crea un array vuoto per la serie, se non esiste
+                acc[series] = [];
             }
-            acc[series].push(set); // Aggiungi il set al gruppo corrispondente
+            acc[series].push(set);
             return acc;
         }, {});
-
 
         for (const series in groupedData) {
             groupedData[series].sort((a, b) => {
                 const dateA = new Date(a.releaseDate);
                 const dateB = new Date(b.releaseDate);
 
-                if (dateA > dateB) return -1; // Più recente prima
-                if (dateA < dateB) return 1;  // Più vecchio dopo
+                if (dateA > dateB) return -1;
+                if (dateA < dateB) return 1;
 
-                // In caso di data di uscita uguale, ordina per nome in ordine alfabetico
                 return a.name.localeCompare(b.name);
         })}
 
         return groupedData;
     }
-
-    const groupedAndSortedSets = groupAndSortSetsBySeries(sets);
 
     return (
         <div className="py-16 lg:px-16 flex flex-col gap-y-4 w-full">
@@ -74,18 +147,88 @@ const TCGPage = (props) => {
                 </div>
             </section>
             <section className="mt-8 flex flex-col gap-12">
+                {(loading || filterOptions.length === 0) ? "" :
+                    <div className={"w-full flex flex-row gap-4"}>
+                        <Input
+                            isClearable
+                            type="search"
+                            name={"searchValue"}
+                            classNames={{
+                                base: "w-full sm:max-w-xs h-10",
+                                listboxWrapper: "max-h-[40px]",
+                                selectorButton: "text-default-500",
+                                inputWrapper: "md:rounded-full"
+                            }}
+                            inputProps={{
+                                classNames: {
+                                    input: "ml-1",
+                                    inputWrapper: "h-[48px]",
+                                },
+                            }}
+                            value={userFilterInput}
+                            onValueChange={setUserFilterInput}
+                            placeholder="Search this set"
+                            startContent={<MagnifyingGlassIcon className="text-default-400 fill-primary" height={20}
+                                                               strokeWidth={2.5}/>}
+                            variant="faded"
+                        />
+                        <div className={"flex flex-row justify-between"}>
+                            <Button onPress={onOpen}
+                                    radius={"full"}
+                                    className={"font-medium"}
+                                    startContent={<AdjustmentsHorizontalIcon className="fill-inherit w-5"/>}
+                            >
+                                Filters {activeFiltersCount > 0 ? `(${activeFiltersCount})` : ""}
+                            </Button>
+                            <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
+                                <DrawerContent>
+                                    {(onClose) => (
+                                        <>
+                                            <DrawerHeader
+                                                className="flex flex-col gap-1 text-2xl">Filters</DrawerHeader>
+                                            <DrawerBody>
+                                                <SetsFilters filterOptions={filterOptions}
+                                                              activeFilters={activeFilters}
+                                                              setActiveFilters={setActiveFilters}
+                                                              handleApplyFilters={handleApplyFilters}
+                                                />
+                                            </DrawerBody>
+                                            <DrawerFooter>
+                                                <Button color="danger" variant="light" onPress={handleResetFilters}>
+                                                    Reset Filters
+                                                </Button>
+                                                <Button color="primary" onPress={onClose}>
+                                                    Apply Filters
+                                                </Button>
+                                            </DrawerFooter>
+                                        </>
+                                    )}
+                                </DrawerContent>
+                            </Drawer>
+                        </div>
+                    </div>
+                }
                 {loading ?
                     <TCGSerieGroupLoading/>
                     :
                     (error ?
                             <ErrorBox />
                             :
-                            Object.keys(groupedAndSortedSets).reverse().map((series) => (
-                                <TCGSerieGroup key={series}
-                                               name={series}
-                                               serie={groupedAndSortedSets[series]}
-                                />
-                            ))
+                            <>
+                                {filteredSets.length === 0 &&
+                                (userFilterInput.length>0 || Object.values(activeFilters).some(arr => arr.length !== 0)) ?
+                                    <EmptyFilteredResults handleResetFilters={handleResetFilters}
+                                                          titleMessage={"Sorry, we couldn't find any set"}
+                                    />
+                                    :
+                                    Object.keys(groupAndSortSetsBySeries(filteredSets)).reverse().map((series) => (
+                                        <TCGSerieGroup key={series}
+                                                       name={series}
+                                                       serie={groupAndSortSetsBySeries(filteredSets)[series]}
+                                        />
+                                    ))
+                                }
+                            </>
                     )
                 }
             </section>

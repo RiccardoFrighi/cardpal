@@ -1,3 +1,4 @@
+// Extracts all the options for cards to put on the filters sidebar
 export const extractCardsFilterOptions = (cards) => {
     const rarities = new Set();
     const supertypes = new Set();
@@ -27,6 +28,27 @@ export const extractCardsFilterOptions = (cards) => {
     };
 };
 
+// Extracts all the options for sets to put on the filters sidebar
+export const extractSetsFilterOptions = (sets) => {
+    const series = new Set();
+    const years = new Set();
+
+    sets.forEach(set => {
+        if (set.series) {
+            series.add(set.series);
+        }
+        if (set.releaseDate) {
+            years.add(set.releaseDate.substring(0, 4));
+        }
+    });
+
+    return {
+        series: Array.from(series),
+        years: Array.from(years),
+    };
+};
+
+// Filter the cards to render
 export const filterCards = (cards, activeFilters) => {
 
     return cards.filter(card => {
@@ -48,13 +70,29 @@ export const filterCards = (cards, activeFilters) => {
 
         return matchesRarity && matchesSupertype && matchesSubtype && matchesType;
     })
-
 }
 
+// Filter the sets to render
+export const filterSets = (sets, activeFilters) => {
+
+    return sets.filter(set => {
+        // Check rarity filter
+        const matchesSeries = activeFilters.series.length === 0 ||
+            (set.series && activeFilters.series.includes(set.series));
+
+        // Check supertype filter
+        const matchesYear = activeFilters.years.length === 0 ||
+            (set.releaseDate && activeFilters.years.includes(set.releaseDate.substring(0, 4)));
+
+        return matchesSeries && matchesYear;
+    })
+}
+
+// Countes the active filters in the filters sidebar
 export const countActiveFilters = (filters) => {
     return Object.values(filters).reduce((count, filterArray) => {
         if (Array.isArray(filterArray) && filterArray.length > 0) {
-            count += 1;
+            count += filterArray.length;
         }
         return count;
     }, 0);

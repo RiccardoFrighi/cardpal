@@ -14,7 +14,6 @@ const SingleSetHeader = (props) => {
                      alt={`${setName} Logo`}
                      className="object-contain w-full h-full"
                      loading={"lazy"}
-
                 />
             </div>
             <div className="flex flex-col items-center sm:items-start gap-x-1 py-1.5">

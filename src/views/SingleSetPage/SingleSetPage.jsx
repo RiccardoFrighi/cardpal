@@ -25,6 +25,7 @@ import {MagnifyingGlassIcon} from "@heroicons/react/16/solid/index.js";
 import {AdjustmentsHorizontalIcon} from "@heroicons/react/24/solid/index.js";
 import {countActiveFilters, extractCardsFilterOptions, filterCards} from "../../components/Filters/filterFunctions.js";
 import CardsFilters from "../../components/Filters/CardsFilters.jsx";
+import EmptyFilteredResults from "../../components/Filters/EmptyFilteredResults.jsx";
 
 
 const SingleSetPage = () => {
@@ -36,7 +37,7 @@ const SingleSetPage = () => {
     const [isGridView, setIsGridView] = React.useState(true);
     const [cardsLoaded, setCardsLoaded] = useState(false);
     const [userFilterInput, setUserFilterInput] = useState("")
-    const [filteredCards, setFilteredCards ] = useState()
+    const [filteredCards, setFilteredCards ] = useState([])
     const [filterOptions, setFilterOptions] = useState([])
     const [activeFilters, setActiveFilters] = useState({
         rarities: [],
@@ -46,7 +47,6 @@ const SingleSetPage = () => {
     });
 
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
-
 
     // Resets the view to top of the page
     useEffect(() => {
@@ -80,14 +80,16 @@ const SingleSetPage = () => {
         return filterCards(filteredItems, activeFilters);
     }
 
-
+    // Applies the active filters
     const handleApplyFilters = (filters) => {
         let results = applyFilters(filteredCards, filters);
         setFilteredCards(results);
     };
 
+    // Resets the active filters
     const handleResetFilters = () => {
         setFilteredCards(setCards);
+        setUserFilterInput("")
         setActiveFilters({
                 rarities: [],
                 supertypes: [],
@@ -96,8 +98,8 @@ const SingleSetPage = () => {
         })
     };
 
+    // Stores the active filters count
     const activeFiltersCount = countActiveFilters(activeFilters);
-
 
     return (
         <div className="py-16 lg:px-16 flex flex-col gap-y-4 w-full">
@@ -216,13 +218,20 @@ const SingleSetPage = () => {
                     <CardsGridLoading/>
                     :
                     ((error || setCardsError) ?
-                            ""
-                            :
-                        (isGridView ?
-                            <CardsGrid cards={filteredCards}/>
+                        <ErrorBox />
                         :
-                            <CardsTable cards={filteredCards}/>
-                        )
+                        <>
+                            {filteredCards.length === 0 &&
+                            (userFilterInput.length>0 || Object.values(activeFilters).some(arr => arr.length !== 0)) ?
+                                <EmptyFilteredResults handleResetFilters={handleResetFilters} titleMessage={""} />
+                                :
+                                (isGridView ?
+                                    <CardsGrid cards={filteredCards}/>
+                                    :
+                                    <CardsTable cards={filteredCards}/>
+                                )
+                            }
+                        </>
                     )
                 }
 

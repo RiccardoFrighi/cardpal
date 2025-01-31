@@ -8,7 +8,7 @@ const TCGSerieGroup = (props) => {
     return (
         <div key={name} className="flex flex-col items-start gap-4">
             <h2 className="text-lg sm:text-2xl font-semibold">{name}</h2>
-            <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 xl:px-0 w-full">
+            <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-2 md:gap-x-4 gap-y-4 xl:px-0 w-full">
                 {serie.map((set) => (
                     <TCGSerieSingleSet key={set.id}
                                        id={set.id}

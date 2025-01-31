@@ -15,7 +15,6 @@ const CardDetailsPrices = (props) => {
             key: "price",
             label: "MARKET PRICE",
         },
-
     ];
 
     return (
