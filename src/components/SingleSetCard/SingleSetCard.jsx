@@ -13,7 +13,7 @@ const SingleSetCard = (props) => {
         <NavLink to={`/tcg/pokemon/${setId}/${id}`}
                 className={`flex flex-col gap-1`}
         >
-            <Card className="w-fit border-none">
+            <Card className="w-fit border-none hover:-translate-y-1">
                 <Image alt={card.name}
                        //isBlurred
                        className="object-cover w-full"

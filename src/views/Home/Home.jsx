@@ -1,6 +1,6 @@
-import {Button, Input} from "@heroui/react";
+import {Button, Chip, Input} from "@heroui/react";
 import TCGBannerGrid from "../../components/TCGBannerGrid/TCGBannerGrid.jsx";
-import {MagnifyingGlassIcon} from "@heroicons/react/16/solid/index.js";
+import {MagnifyingGlassIcon, SparklesIcon} from "@heroicons/react/16/solid/index.js";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
@@ -23,10 +23,20 @@ const Home = () => {
     return (
         <div className="container mx-auto mt-6 mb-10">
             <div className="flex flex-col gap-5 m-12 items-center">
-                <h1 className="mb-4 text-6xl font-extrabold leading-none tracking-tight text-gray-900 md:text-6xl lg:text-7xl dark:text-white">
-                    The <span className="text-red-orange">Ultimate</span> TCG Platform
+                <Chip color="primary"
+                      variant="flat"
+                      startContent={<SparklesIcon className={"fill-primary"} style={{width:'16px', marginLeft:"4px"}} />}
+                      classNames={{
+                          base: "border-small border-primary shadow-primary-500/30",
+                          content: "text-primary",
+                      }}
+                >
+                    Your TCG Journey starts here!
+                </Chip>
+                <h1 className=" lg:mx-28 leading-none tracking-tight text-gray-900 text-3xl font-semibold md:text-6xl md:mb-4 lg:text-6xl dark:text-white">
+                    Begin your adventure in the world of trading card games
                 </h1>
-                <h2 className="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
+                <h2 className="mb-6 text-small font-normal text-gray-500 md:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
                     Explore, track, and keep alive your passion for TCGs with tools designed for every trainer,
                     strategist, or collector.
                 </h2>

@@ -129,7 +129,7 @@ const TCGPage = (props) => {
                 <BreadcrumbItem isDisabled>All TCGs</BreadcrumbItem>
                 <BreadcrumbItem>Pokemon</BreadcrumbItem>
             </Breadcrumbs>
-            <section className={`flex flex-col sm:flex-row gap-4 mb-4 ${error ? "hidden" : ""}`}>
+            <section className={`flex flex-col sm:flex-row gap-4 mb-4 sm:h-16 ${error ? "hidden" : ""}`}>
                 <div className="relative h-[64px] w-full sm:w-40">
                     <img src={logo}
                          alt={`${name} Logo`}
@@ -146,7 +146,7 @@ const TCGPage = (props) => {
                     </div>
                 </div>
             </section>
-            <section className="mt-8 flex flex-col gap-12">
+            <section className="flex flex-col gap-4">
                 {(loading || filterOptions.length === 0) ? "" :
                     <div className={"w-full flex flex-row gap-4"}>
                         <Input
