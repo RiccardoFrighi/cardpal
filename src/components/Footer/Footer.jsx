@@ -8,7 +8,9 @@ import unimib from "../../assets/images/unimib.png";
 const Footer = () => {
 
     return (
-        <footer className="flex flex-col md:flex-row gap-6 md:gap-40 mx-6 mt-16 mb-4 px-10 py-6 items-start justify-between rounded-3xl bg-onyx">
+        <footer className="flex flex-col md:flex-row self-center gap-6 md:gap-48 xl:gap-96 mx-6 mt-16 mb-4 px-10 py-6 items-start justify-between rounded-3xl bg-onyx"
+                style={{maxWidth: "1280px"}}
+        >
             <div className="flex items-center md:items-start flex-col">
                 <NavLink exact={true}
                          to={"/"}

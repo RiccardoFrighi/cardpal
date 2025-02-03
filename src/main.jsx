@@ -6,7 +6,7 @@ import App from './views/App/App.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <StrictMode>
-      <HashRouter>
+      <HashRouter basename="/">
           <App/>
       </HashRouter>
   </StrictMode>

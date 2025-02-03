@@ -217,22 +217,18 @@ const SingleSetPage = () => {
                 {(loading || setCardsLoading) ?
                     <CardsGridLoading/>
                     :
-                    ((error || setCardsError) ?
-                        <ErrorBox />
-                        :
-                        <>
-                            {filteredCards.length === 0 &&
-                            (userFilterInput.length>0 || Object.values(activeFilters).some(arr => arr.length !== 0)) ?
-                                <EmptyFilteredResults handleResetFilters={handleResetFilters} titleMessage={""} />
+                    <>
+                        {filteredCards.length === 0 &&
+                        (userFilterInput.length>0 || Object.values(activeFilters).some(arr => arr.length !== 0)) ?
+                            <EmptyFilteredResults handleResetFilters={handleResetFilters} titleMessage={"Sorry, we couldn't find any card"} />
+                            :
+                            (isGridView ?
+                                <CardsGrid cards={filteredCards}/>
                                 :
-                                (isGridView ?
-                                    <CardsGrid cards={filteredCards}/>
-                                    :
-                                    <CardsTable cards={filteredCards}/>
-                                )
-                            }
-                        </>
-                    )
+                                <CardsTable cards={filteredCards}/>
+                            )
+                        }
+                    </>
                 }
 
             </section>

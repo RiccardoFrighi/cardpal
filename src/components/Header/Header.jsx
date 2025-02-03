@@ -12,7 +12,7 @@ import {
     Dropdown,
     DropdownMenu,
     NavbarMenu,
-    Button
+    Button,
 } from "@heroui/react";
 import {LogoTextless} from "../Logos/Logos.jsx";
 import TCGListData from "../../assets/data/tcgs"
@@ -31,7 +31,8 @@ const Header = (props) => {
     const inactiveUrls = TCGListData.filter(item => !item.active).map(item => item.url);
 
     // Creates the items for the toggle menu when screen is small
-    const itemList = navItems.map((item) => {
+    // eslint-disable-next-line react/prop-types
+    const itemList = navItems.slice(0, navItems.length-1).map((item) => {
         return (
             <NavbarItem key={item.url} >
                 <NavLink to={item.active ? item.url : "#"}

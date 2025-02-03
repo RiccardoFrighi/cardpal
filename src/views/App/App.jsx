@@ -9,6 +9,7 @@ import {pokemonLogo} from "../../utility/utility.js";
 import SearchResultsPage from "../SearchResultsPage/SearchResultsPage.jsx";
 import {useTheme} from "@heroui/use-theme";
 import CardDetails from "../CardDetails/CardDetails.jsx";
+import Page404 from "../Page404/Page404.jsx";
 
 /*
 declare module "@react-types/shared" {
@@ -24,15 +25,16 @@ function App() {
     const {theme} = useTheme();
 
     const nav = [
-        {url: "/", text: "Home", active: true, exact: true},
-        {url: "/tcg/pokemon", text: "Pokemon", active: true, exact: false},
-        {url: "/tcg/lorcana", text: "Lorcana", active: false, exact: false},
-        {url: "/tcg/one-piece", text: "One Piece", active: false, exact: false},
-        {url: "/tcg/magic", text: "Magic", active: false, exact: false},
-        {url: "/tcg/yugioh", text: "Yu-gi-oh!", active: false, exact: false},
-        {url: "/tcg/starwars", text: "Star Wars Unlimited", active: false, exact: false},
-        {url: "/docs", text: "Docs", active: true, exact: true},
-        {url: "/info", text: "Info", active: true, exact: true}
+        {url: "/", text: "Home", active: true},
+        {url: "/tcg/pokemon", text: "Pokemon", active: true},
+        {url: "/tcg/lorcana", text: "Lorcana", active: false},
+        {url: "/tcg/one-piece", text: "One Piece", active: false},
+        {url: "/tcg/magic", text: "Magic", active: false},
+        {url: "/tcg/yugioh", text: "Yu-gi-oh!", active: false},
+        {url: "/tcg/starwars", text: "Star Wars Unlimited", active: false},
+        {url: "/docs", text: "Docs", active: true},
+        {url: "/info", text: "Info", active: true},
+        {url: "*", text: "404", active: true}
     ];
 
     return (
@@ -49,6 +51,7 @@ function App() {
                         <Route path="/tcg/pokemon/:id" element={<SingleSetPage/>}/>
                         <Route path="/search" element={<SearchResultsPage/>}/>
                         <Route path="tcg/pokemon/:setId/:cardId" element={<CardDetails/>} />
+                        <Route path="*" element={<Page404 />} />
                     </Routes>
                 </MainTemplate>
             </main>

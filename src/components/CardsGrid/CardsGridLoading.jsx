@@ -1,5 +1,5 @@
 import {Card, Image, Skeleton} from "@heroui/react";
-import PokemonBack from "../../assets/images/pokemon-back.png";
+import pokemonBack from "../../assets/images/pokemon-back.png";
 
 
 const CardsGridLoading = () => {
@@ -10,7 +10,7 @@ const CardsGridLoading = () => {
                 <div key={i} className="flex flex-col gap-2">
                     <Card className="w-full h-full border-none animate-pulse">
                         <Image
-                            src={PokemonBack}
+                            src={pokemonBack}
                             alt={"Loading..."}
                             className={"opacity-0 w-full h-full"}
                             style={{opacity: 0}}

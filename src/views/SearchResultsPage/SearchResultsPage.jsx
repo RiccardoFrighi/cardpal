@@ -8,7 +8,7 @@ import {
     Button,
     Drawer,
     DrawerContent,
-    DrawerHeader, DrawerBody, DrawerFooter, ButtonGroup
+    DrawerHeader, DrawerBody, DrawerFooter, ButtonGroup, Image, Link
 } from "@heroui/react";
 import CardsTable from "../../components/CardsTable/CardsTable.jsx";
 import useGetSearchResults from "../../hooks/useGetSearchResults.jsx";
@@ -106,7 +106,9 @@ const SearchResultsPage = () => {
                 </div>
             </section>
             <section className="flex flex-col items-end gap-4">
-                {(loading || filterOptions.length === 0) ? "" :
+                {(loading || filterOptions.length === 0) ?
+                    ""
+                    :
                     <div className={"w-full flex flex-col md:flex-row gap-2 md:gap-4"}>
                         <Input
                             isClearable
@@ -190,16 +192,28 @@ const SearchResultsPage = () => {
                             <ErrorBox />
                             :
                             <>
-                                {filteredResults.length === 0 &&
-                                (userFilterInput.length>0 || Object.values(activeFilters).some(arr => arr.length !== 0)) ?
-                                    <EmptyFilteredResults handleResetFilters={handleResetFilters} titleMessage={""} />
-                                :
-                                    (isGridView ?
-                                        <CardsGrid cards={filteredResults}/>
+                            {results.length === 0 ?
+                                    <div className="flex flex-col w-full pt-8 items-center" >
+                                        <Image src={"https://gbatemp.net/attachments/squirtle-cries-water-puddles-on-pokemon-gif.273223"}
+                                               alt={"No results found"}
+                                               height={144}
+                                               className={"mb-4"}
+                                        />
+                                        <h2 className={"text-2xl font-bold mb-1"}>Oops! We couldn&#39;t find any matches</h2>
+                                        <p className={"mb-6"}>Try refining your search or using different keywords.</p>
+                                        <Link href={"/"} className={"underline text-small"}>Back to Home</Link>
+                                    </div>
                                     :
-                                        <CardsTable cards={filteredResults}/>
+                                    (filteredResults.length === 0 && (userFilterInput.length>0 || Object.values(activeFilters).some(arr => arr.length !== 0)) ?
+                                        <EmptyFilteredResults handleResetFilters={handleResetFilters} titleMessage={"Sorry, we couldn't find any card"} />
+                                    :
+                                        (isGridView ?
+                                            <CardsGrid cards={filteredResults}/>
+                                        :
+                                            <CardsTable cards={filteredResults}/>
+                                        )
                                     )
-                                }
+                            }
                             </>
 
                     )
