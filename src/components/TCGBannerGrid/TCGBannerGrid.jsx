@@ -9,7 +9,7 @@ import starwars from "../../assets/images/starwars-banner.png";
 const TCGBannerGrid = () => {
 
     return (
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2 px-4 xl:px-0">
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2 md:px-4 xl:px-0">
             <TCGBannerGridCard key={"pokemon"} text={"Pokémon"} image={pokemon} active={true} url={"tcg/pokemon"} />
             <TCGBannerGridCard key={"lorcana"} text={"Lorcana"} image={lorcana} active={false} url={"tcg/lorcana"} />
             <TCGBannerGridCard key={"onepiece"} text={"One Piece"} image={onepiece} active={false} url={"tcg/onepiece"} />

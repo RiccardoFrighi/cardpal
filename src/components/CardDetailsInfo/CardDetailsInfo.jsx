@@ -26,7 +26,7 @@ const CardDetailsInfo = (props) => {
                 </span>
             </div>
             <div className="flex flex-col items-start w-full gap-0.5">
-                <span className="text-xs text-foreground-500 leading-6">Release date</span>
+                <span className="text-xs text-foreground-500 leading-6">Tags</span>
                 <span className="text-base font-semibold text-foreground text-start h-6">
                     {cardInfos.subtypes ? cardInfos.subtypes.join(", ") : "N/A"}
                 </span>

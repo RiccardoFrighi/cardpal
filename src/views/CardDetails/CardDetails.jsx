@@ -6,6 +6,7 @@ import CardDetailsInfo from "../../components/CardDetailsInfo/CardDetailsInfo.js
 import CardDetailsPrices from "../../components/CardDetailsInfo/CardDetailsPrices.jsx";
 import CardDetailsLoading from "../../components/CardDetailsInfo/CardDetailsLoading.jsx";
 import useGetCard from "../../hooks/useGetCard.jsx";
+import ErrorBox from "../../components/ErrorBox/ErrorBox.jsx";
 
 const CardDetails = () => {
 
@@ -23,7 +24,7 @@ const CardDetails = () => {
                 <CardDetailsLoading />
                 :
                 (error ?
-                    <p>Error: {error}</p>
+                    <ErrorBox />
                 :
                     <div className="flex flex-col md:flex-row w-full">
                         <section className={"px-20 md:px-0 mb-10 md:mb-0 md:mr-8" }>

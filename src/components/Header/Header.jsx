@@ -71,7 +71,7 @@ const Header = (props) => {
                 <NavbarMenuToggle
                     aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                     className="sm:hidden"
-                    icon={isMenuOpen ? <XMarkIcon /> : <Bars3Icon />}
+                    icon={isMenuOpen ? <XMarkIcon className={"h-6"}/> : <Bars3Icon className={"h-6"}/>}
                 />
                 <NavbarBrand className="mr-6">
                     <NavLink exact={true}
@@ -96,6 +96,7 @@ const Header = (props) => {
                                     className="text-base text-inherit p-0 bg-transparent data-[hover=true]:bg-transparent"
                                     radius="sm"
                                     variant="light"
+                                    style={{fontSize: "16px"}}
                                     endContent={<ChevronDownIcon className="size-6" size={16} />}
                                 >
                                     TCGs
@@ -110,18 +111,11 @@ const Header = (props) => {
                             { dropdownItems }
                         </DropdownMenu>
                     </Dropdown>
-                    <NavbarItem key={"/docs"}>
+                    <NavbarItem key={"/about"}>
                         <NavLink exact={true}
-                                 to={"/docs"}
+                                 to={"/about"}
                                  className="nav-link">
-                            Docs
-                        </NavLink>
-                    </NavbarItem>
-                    <NavbarItem key={"/info"}>
-                        <NavLink exact={true}
-                                 to={"/info"}
-                                 className="nav-link">
-                            Infos
+                            About
                         </NavLink>
                     </NavbarItem>
                 </NavbarContent>

@@ -43,10 +43,10 @@ const CardDetailsPrices = (props) => {
             </Table>
             {(tcgplayer && tcgplayer.prices) ?
                 <div className="flex flex-row justify-end items-end w-full gap-2">
-                    <span className="text-sm font-semibold text-foreground text-start h-6">
+                    <p className="text-sm font-semibold text-foreground text-start h-6">
                         <span className="text-tiny text-foreground-500 leading-6">Updated at
                         </span> {reverseDate(tcgplayer.updatedAt)}
-                    </span>
+                    </p>
                 </div>
                 :
                 ""

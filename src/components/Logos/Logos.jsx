@@ -40,6 +40,7 @@ export const LogoTextless = () => {
 
     const {theme} = useTheme()
 
+    // Chooses what color to use based on the theme
     const fillColor = () => {
         if (theme === 'dark') {
             return "white"

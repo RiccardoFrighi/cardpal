@@ -10,6 +10,7 @@ import SearchResultsPage from "../SearchResultsPage/SearchResultsPage.jsx";
 import {useTheme} from "@heroui/use-theme";
 import CardDetails from "../CardDetails/CardDetails.jsx";
 import Page404 from "../Page404/Page404.jsx";
+import About from "../About/About.jsx";
 
 /*
 declare module "@react-types/shared" {
@@ -32,8 +33,7 @@ function App() {
         {url: "/tcg/magic", text: "Magic", active: false},
         {url: "/tcg/yugioh", text: "Yu-gi-oh!", active: false},
         {url: "/tcg/starwars", text: "Star Wars Unlimited", active: false},
-        {url: "/docs", text: "Docs", active: true},
-        {url: "/info", text: "Info", active: true},
+        {url: "/about", text: "About", active: true},
         {url: "*", text: "404", active: true}
     ];
 
@@ -51,7 +51,7 @@ function App() {
                         <Route path="/tcg/pokemon/:id" element={<SingleSetPage/>}/>
                         <Route path="/search" element={<SearchResultsPage/>}/>
                         <Route path="tcg/pokemon/:setId/:cardId" element={<CardDetails/>} />
-                        <Route path="*" element={<Page404 />} />
+                        <Route path="/about" element={<About/>}/>
                     </Routes>
                 </MainTemplate>
             </main>
