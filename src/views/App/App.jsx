@@ -34,7 +34,6 @@ function App() {
         {url: "/tcg/yugioh", text: "Yu-gi-oh!", active: false},
         {url: "/tcg/starwars", text: "Star Wars Unlimited", active: false},
         {url: "/about", text: "About", active: true},
-        {url: "*", text: "404", active: true}
     ];
 
     return (
@@ -52,6 +51,7 @@ function App() {
                         <Route path="/search" element={<SearchResultsPage/>}/>
                         <Route path="tcg/pokemon/:setId/:cardId" element={<CardDetails/>} />
                         <Route path="/about" element={<About/>}/>
+                        <Route path="*" element={<Page404/>}/>
                     </Routes>
                 </MainTemplate>
             </main>
