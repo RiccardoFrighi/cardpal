@@ -12,7 +12,8 @@ const useGetSets = () => {
             try {
                 const response = await fetch('https://api.pokemontcg.io/v2/sets?orderBy=releaseDate');
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    return;
+                    //throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const result = await response.json();
                 setSets(result.data);

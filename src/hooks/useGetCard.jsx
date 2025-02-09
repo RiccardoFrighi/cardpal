@@ -11,7 +11,8 @@ const useGetCard = (cardId) => {
             try {
                 const response = await fetch(`https://api.pokemontcg.io/v2/cards/${cardId}`);
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    return;
+                    //throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const result = await response.json();
                 setCard(result.data);
