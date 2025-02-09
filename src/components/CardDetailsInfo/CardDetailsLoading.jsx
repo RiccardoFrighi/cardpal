@@ -1,5 +1,5 @@
 import {Card, Divider, Image, Skeleton} from "@heroui/react";
-import PokemonBack from "../../assets/images/pokemon-back.png";
+import pokemonback from "../../assets/images/pokemon-back.png";
 
 
 const CardDetailsLoading = () => {
@@ -9,7 +9,7 @@ const CardDetailsLoading = () => {
             <section className={"px-20 md:px-0 mb-10 md:mb-0 md:mr-8"}>
                 <Card className={"border-none md:w-96 lg:w-2xl animate-pulse"}>
                     <Image
-                        src={PokemonBack}
+                        src={pokemonback}
                         alt={"Loading..."}
                         className={"opacity-0 w-full h-full"}
                         style={{opacity: 0}}
@@ -35,7 +35,7 @@ const CardDetailsLoading = () => {
                     </div>
                 </section>
                 <Divider/>
-                <div className="w-full grid grid-cols-4 md:grid-cols-2 gap-8 items-start flex-wrap ">
+                <div className="w-full grid grid-cols-2 gap-8 items-start flex-wrap ">
                     <div className="flex flex-col items-start w-full gap-0.5">
                         <Skeleton className="h-5 w-24 animate-pulse rounded-md"/>
                         <Skeleton className=" h-6 w-12 animate-pulse rounded-md"/>

@@ -9,7 +9,7 @@ const useGetSingleSetCards = (setId) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`https://api.pokemontcg.io/v2/cards?q=set.id:${setId}`);
+                const response = await fetch(`https://api.pokemontcg.io/v2/cards?q=set.id:${setId}&orderBy=number`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }

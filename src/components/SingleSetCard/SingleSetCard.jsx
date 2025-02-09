@@ -2,6 +2,7 @@ import {NavLink} from "react-router-dom";
 import {Card, Image} from "@heroui/react";
 import {pokemonDefaultImage, zeroPad, formatUSDollar, getLastMarketPrice} from "../../utility/utility";
 import PropTypes from "prop-types";
+import pokemonback from "../../assets/images/pokemon-back.png";
 
 
 const SingleSetCard = (props) => {
@@ -19,7 +20,7 @@ const SingleSetCard = (props) => {
                        className="object-cover w-full"
                        src={card.images.small}
                        loading={"lazy"}
-                       fallbackSrc="src/assets/images/pokemonBack.png"
+                       fallbackSrc={pokemonback}
                        onError={(event) => pokemonDefaultImage(event)}
                 />
             </Card>

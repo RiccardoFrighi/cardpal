@@ -1,6 +1,6 @@
 import {Button, Card, Image,} from "@heroui/react";
 import PropTypes from "prop-types";
-import PokemonBack from "../../assets/images/pokemon-back.png";
+import pokemonback from "../../assets/images/pokemon-back.png";
 
 const EmptyFilteredResults = (props) => {
 
@@ -28,7 +28,7 @@ const EmptyFilteredResults = (props) => {
                     <div key={i} className="flex flex-col gap-2">
                         <Card className="w-full h-full border-none">
                             <Image
-                                src={PokemonBack}
+                                src={pokemonback}
                                 alt={"Loading..."}
                                 className={"opacity-0 w-full h-full"}
                                 style={{opacity: 0}}

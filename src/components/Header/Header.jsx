@@ -32,7 +32,7 @@ const Header = (props) => {
 
     // Creates the items for the toggle menu when screen is small
     // eslint-disable-next-line react/prop-types
-    const itemList = navItems.slice(0, navItems.length-1).map((item) => {
+    const itemList = navItems.slice(0, navItems.length).map((item) => {
         return (
             <NavbarItem key={item.url} >
                 <NavLink to={item.active ? item.url : "#"}
@@ -56,11 +56,12 @@ const Header = (props) => {
     const dropdownItems = TCGListData.map((item) => {
         return (
             <DropdownItem key={item.url}
-                          description={item.active ? "" : "Coming soon"}>
-                <NavLink to={item.active ? item.url : "#"}
-                         className={`nav-link ${!item.active ? 'cursor-default' : ''}`}>
+                          description={item.active ? "" : "Coming soon"}
+                          textValue={item.text}
+                          href={item.active ? item.url : "#"}
+                          className={`${!item.active ? 'cursor-default' : ''}`}
+            >
                     {item.text}
-                </NavLink>
             </DropdownItem>
         )
     })
@@ -74,16 +75,14 @@ const Header = (props) => {
                     icon={isMenuOpen ? <XMarkIcon className={"h-6"}/> : <Bars3Icon className={"h-6"}/>}
                 />
                 <NavbarBrand className="mr-6">
-                    <NavLink exact={true}
-                             to={"/"}
+                    <NavLink to={"/"}
                              className="nav-link">
                         <LogoTextless />
                     </NavLink>
                 </NavbarBrand>
                 <NavbarContent className="hidden sm:flex gap-8" justify="center">
                     <NavbarItem key={"/"}>
-                        <NavLink exact={true}
-                                 to={"/"}
+                        <NavLink to={"/"}
                                  className="nav-link">
                             Home
                         </NavLink>
@@ -112,8 +111,7 @@ const Header = (props) => {
                         </DropdownMenu>
                     </Dropdown>
                     <NavbarItem key={"/about"}>
-                        <NavLink exact={true}
-                                 to={"/about"}
+                        <NavLink to={"/about"}
                                  className="nav-link">
                             About
                         </NavLink>
@@ -136,5 +134,5 @@ const Header = (props) => {
 export default Header;
 
 Navbar.propTypes = {
-    navItems: PropTypes.array.isRequired,
+    navItems: PropTypes.array
 }

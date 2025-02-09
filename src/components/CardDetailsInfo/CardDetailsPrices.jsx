@@ -22,13 +22,15 @@ const CardDetailsPrices = (props) => {
             <Table aria-label="Prices table">
                 <TableHeader className={"w-full"}>
                     {columns.map((column) =>
-                        <TableColumn key={column.key}>{column.label}</TableColumn>
+                        <TableColumn key={column.key}>
+                            {column.label}
+                        </TableColumn>
                     )}
                 </TableHeader>
                 <TableBody emptyContent={"No prices were found."}>
                     {(tcgplayer && tcgplayer.prices) ?
                         (Object.entries(tcgplayer.prices).map((price) => (
-                            <TableRow key={price.id}>
+                            <TableRow key={price[0]}>
                                 <TableCell className="text-base font-semibold text-start">
                                     {formatCamelCase(price[0])}
                                 </TableCell>

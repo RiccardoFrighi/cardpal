@@ -38,7 +38,6 @@ function App() {
 
     return (
         <HeroUIProvider navigate={navigate} useHref={useHref} attribute="class"
-                        defaultTheme="light"
                         themes={['light', 'dark']}>
             <main className={`${theme} text-foreground bg-background`}>
                 <MainTemplate

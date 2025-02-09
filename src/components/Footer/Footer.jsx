@@ -12,9 +12,7 @@ const Footer = () => {
                 style={{maxWidth: "1280px"}}
         >
             <div className="flex items-center md:items-start flex-col">
-                <NavLink exact={true}
-                         to={"/"}
-                         anchorIcon={"src/assets/github-white.svg"}
+                <NavLink to={"/"}
                          className="nav-link mb-2">
                     <Logo />
                 </NavLink>
