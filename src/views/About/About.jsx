@@ -2,7 +2,7 @@ import {Link} from "@heroui/react";
 
 const About = () => {
     return (
-        <div className="container mx-auto mt-6 mb-10">
+        <div className="container mx-auto mt-20 mb-10">
             <h1 className=" lg:mx-28 leading-none tracking-tight text-gray-900 text-3xl font-semibold md:text-5xl md:mb-8 dark:text-white">
                 About CardPal
             </h1>

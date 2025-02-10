@@ -8,7 +8,7 @@ import {
     Button,
     Drawer,
     DrawerContent,
-    DrawerHeader, DrawerBody, DrawerFooter, ButtonGroup, Image, Link
+    DrawerHeader, DrawerBody, DrawerFooter, ButtonGroup, Image, Link, Select, SelectItem
 } from "@heroui/react";
 import CardsTable from "../../components/CardsTable/CardsTable.jsx";
 import useGetSearchResults from "../../hooks/useGetSearchResults.jsx";
@@ -37,6 +37,31 @@ const SearchResultsPage = () => {
         subtypes: [],
         types: []
     });
+
+    const sortOptions = {
+        numberAsc: {
+            key: "numberAsc",
+            label: "Card # (asc)",
+            sortFunction: (a, b) => parseInt(a.number) - parseInt(b.number)
+        },
+        numberDesc: {
+            key: "numberDesc",
+            label: "Card # (desc)",
+            sortFunction: (a, b) => parseInt(b.number) - parseInt(a.number)
+        },
+        nameAsc: {
+            key: "nameAsc",
+            label: "Name (asc)",
+            sortFunction: (a, b) => a.name.localeCompare(b.name)
+        },
+        nameDesc: {
+            key: "nameDesc",
+            label: "Name (desc)",
+            sortFunction: (a, b) => b.name.localeCompare(a.name)
+        }
+    };
+
+    const [selectedSort, setSelectedSort] = useState("numberAsc");
 
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
@@ -93,6 +118,16 @@ const SearchResultsPage = () => {
     //Store the active filters count
     const activeFiltersCount = countActiveFilters(activeFilters);
 
+    // // Applies the sort order
+    const handleSortChange = (e) => {
+        if (e.currentKey) {
+            setSelectedSort(e.currentKey);
+            let results = filteredResults.sort(sortOptions[e.currentKey].sortFunction);
+            setFilteredResults(results);
+        }
+
+    }
+
     return (
         <div className="py-16 lg:px-16 flex flex-col gap-y-4 w-full">
             <section className="h-20">
@@ -133,7 +168,7 @@ const SearchResultsPage = () => {
                                                                strokeWidth={2.5}/>}
                             variant="faded"
                         />
-                        <div className={"flex flex-row w-full justify-between"}>
+                        <div className={"flex flex-row w-full justify-between gap-2 overflow-scroll"} style={{scrollbarWidth: "none"}}>
                             <Button onPress={onOpen}
                                     radius={"full"}
                                     className={"font-medium"}
@@ -166,22 +201,48 @@ const SearchResultsPage = () => {
                                     )}
                                 </DrawerContent>
                             </Drawer>
-                            <ButtonGroup>
-                                <Button isDisabled={isGridView}
-                                        radius={"full"}
-                                        className={"font-medium"}
-                                        onPress={() => setIsGridView(!isGridView)}
+                            <div className={"flex flex-row gap-4"}>
+                                <Select
+                                    label="Sort by:"
+                                    variant={"bordered"}
+                                    labelPlacement={"outside-left"}
+                                    selectedKeys={[selectedSort]}
+                                    onSelectionChange={handleSortChange}
+                                    disallowEmptySelection={true}
+                                    radius={"full"}
+                                    classNames={{
+                                        base: "w-full items-center",
+                                        label: "text-14 font-medium text-foreground-500 w-[6rem]",
+                                        value: "text-14 font-medium",
+                                        trigger: [
+                                            "shadow-none",
+                                            "data-[hover=true]:border-default-300",
+                                            "data-[focus=true]:border-default-300",
+                                            "data-[open=true]:border-default-300",
+                                        ],
+                                    }}
                                 >
-                                    Grid
-                                </Button>
-                                <Button isDisabled={!isGridView}
-                                        radius={"full"}
-                                        className={"font-medium"}
-                                        onPress={() => setIsGridView(!isGridView)}
-                                >
-                                    Table
-                                </Button>
-                            </ButtonGroup>
+                                    {Object.values(sortOptions).map((option) => (
+                                        <SelectItem key={option.key}>{option.label}</SelectItem>
+                                    ))}
+                                </Select>
+                                <ButtonGroup>
+                                    <Button isDisabled={isGridView}
+                                            radius={"full"}
+                                            className={"font-medium"}
+                                            onPress={() => setIsGridView(!isGridView)}
+                                    >
+                                        Grid
+                                    </Button>
+                                    <Button isDisabled={!isGridView}
+                                            radius={"full"}
+                                            className={"font-medium"}
+                                            onPress={() => setIsGridView(!isGridView)}
+                                    >
+                                        Table
+                                    </Button>
+                                </ButtonGroup>
+                            </div>
                         </div>
                     </div>
                 }
@@ -189,31 +250,34 @@ const SearchResultsPage = () => {
                     <CardsGridLoading/>
                     :
                     (error ?
-                            <ErrorBox />
+                            <ErrorBox/>
                             :
                             <>
-                            {results.length === 0 ?
-                                    <div className="flex flex-col w-full pt-8 items-center" >
-                                        <Image src={"https://gbatemp.net/attachments/squirtle-cries-water-puddles-on-pokemon-gif.273223"}
-                                               alt={"No results found"}
-                                               height={144}
-                                               className={"mb-4"}
+                                {results.length === 0 ?
+                                    <div className="flex flex-col w-full pt-8 items-center">
+                                        <Image
+                                            src={"https://gbatemp.net/attachments/squirtle-cries-water-puddles-on-pokemon-gif.273223"}
+                                            alt={"No results found"}
+                                            height={144}
+                                            className={"mb-4"}
                                         />
-                                        <h2 className={"text-2xl font-bold mb-1"}>Oops! We couldn&#39;t find any matches</h2>
+                                        <h2 className={"text-2xl font-bold mb-1"}>Oops! We couldn&#39;t find any
+                                            matches</h2>
                                         <p className={"mb-6"}>Try refining your search or using different keywords.</p>
                                         <Link href={"/"} className={"underline text-small"}>Back to Home</Link>
                                     </div>
                                     :
-                                    (filteredResults.length === 0 && (userFilterInput.length>0 || Object.values(activeFilters).some(arr => arr.length !== 0)) ?
-                                        <EmptyFilteredResults handleResetFilters={handleResetFilters} titleMessage={"Sorry, we couldn't find any card"} />
-                                    :
-                                        (isGridView ?
-                                            <CardsGrid cards={filteredResults}/>
-                                        :
-                                            <CardsTable cards={filteredResults}/>
-                                        )
+                                    (filteredResults.length === 0 && (userFilterInput.length > 0 || Object.values(activeFilters).some(arr => arr.length !== 0)) ?
+                                            <EmptyFilteredResults handleResetFilters={handleResetFilters}
+                                                                  titleMessage={"Sorry, we couldn't find any card"}/>
+                                            :
+                                            (isGridView ?
+                                                    <CardsGrid cards={filteredResults}/>
+                                                    :
+                                                    <CardsTable cards={filteredResults}/>
+                                            )
                                     )
-                            }
+                                }
                             </>
 
                     )

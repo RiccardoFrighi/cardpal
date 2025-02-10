@@ -14,7 +14,7 @@ import {
     DrawerContent,
     DrawerFooter,
     DrawerHeader,
-    Input,
+    Input, Select, SelectItem,
     useDisclosure,
 } from "@heroui/react";
 import CardsTable from "../../components/CardsTable/CardsTable.jsx";
@@ -45,6 +45,31 @@ const SingleSetPage = () => {
         subtypes: [],
         types: [],
     });
+
+    const sortOptions = {
+        numberAsc: {
+            key: "numberAsc",
+            label: "Card # (asc)",
+            sortFunction: (a, b) => parseInt(a.number) - parseInt(b.number)
+        },
+        numberDesc: {
+            key: "numberDesc",
+            label: "Card # (desc)",
+            sortFunction: (a, b) => parseInt(b.number) - parseInt(a.number)
+        },
+        nameAsc: {
+            key: "nameAsc",
+            label: "Name (asc)",
+            sortFunction: (a, b) => a.name.localeCompare(b.name)
+        },
+        nameDesc: {
+            key: "nameDesc",
+            label: "Name (desc)",
+            sortFunction: (a, b) => b.name.localeCompare(a.name)
+        }
+    };
+
+    const [selectedSort, setSelectedSort] = useState("numberAsc");
 
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
@@ -82,7 +107,7 @@ const SingleSetPage = () => {
 
     // Applies the active filters
     const handleApplyFilters = (filters) => {
-        let results = applyFilters(filteredCards, filters);
+        let results = applyFilters(filteredCards, filters)
         setFilteredCards(results);
     };
 
@@ -100,6 +125,16 @@ const SingleSetPage = () => {
 
     // Stores the active filters count
     const activeFiltersCount = countActiveFilters(activeFilters);
+
+    // // Applies the sort order
+    const handleSortChange = (e) => {
+        if (e.currentKey) {
+            setSelectedSort(e.currentKey);
+            let results = filteredCards.sort(sortOptions[e.currentKey].sortFunction);
+            setFilteredCards(results);
+        }
+
+    }
 
     return (
         <div className="py-16 lg:px-16 flex flex-col gap-y-4 w-full">
@@ -140,92 +175,121 @@ const SingleSetPage = () => {
             </section>
             <section className="flex flex-col items-end gap-4">
                 {(loading || setCardsLoading || filterOptions.length===0) ? "" :
-                <div className={"w-full flex flex-col md:flex-row gap-2 md:gap-4"}>
-                    <Input
-                        isClearable
-                        type="search"
-                        name={"searchValue"}
-                        classNames={{
-                            base: "w-full md:max-w-xs h-10",
-                            listboxWrapper: "max-h-[40px]",
-                            selectorButton: "text-default-500",
-                            inputWrapper: "md:rounded-full"
-                        }}
-                        inputProps={{
-                            classNames: {
-                                input: "ml-1",
-                                inputWrapper: "h-[48px]",
-                            },
-                        }}
-                        value={userFilterInput}
-                        onValueChange={setUserFilterInput}
-                        placeholder="Search this set"
-                        startContent={<MagnifyingGlassIcon className="text-default-400 fill-primary" height={20} strokeWidth={2.5} />}
-                        variant="faded"
-                    />
-                    <div className={"flex flex-row w-full justify-between"}>
-                        <Button onPress={onOpen}
-                                radius={"full"}
-                                className={"font-medium"}
-                                startContent={<AdjustmentsHorizontalIcon className="fill-inherit w-5" />}
-                        >
-                            Filters {activeFiltersCount > 0 ? `(${activeFiltersCount})` : ""}
-                        </Button>
-                        <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
-                            <DrawerContent>
-                                {(onClose) => (
-                                    <>
-                                        <DrawerHeader className="flex flex-col gap-1 text-2xl">Filters</DrawerHeader>
-                                        <DrawerBody>
-                                            <CardsFilters filterOptions={filterOptions}
-                                                          activeFilters={activeFilters}
-                                                          setActiveFilters={setActiveFilters}
-                                                          handleApplyFilters={handleApplyFilters}
-                                            />
-                                        </DrawerBody>
-                                        <DrawerFooter>
-                                            <Button color="danger" variant="light" onPress={handleResetFilters}>
-                                                Reset Filters
-                                            </Button>
-                                            <Button color="primary" onPress={onClose}>
-                                                Apply Filters
-                                            </Button>
-                                        </DrawerFooter>
-                                    </>
-                                )}
-                            </DrawerContent>
-                        </Drawer>
-                        <ButtonGroup>
-                            <Button isDisabled={isGridView}
+                    <div className={"w-full flex flex-col md:flex-row gap-2 md:gap-4"}>
+                        <Input
+                            isClearable
+                            type="search"
+                            name={"searchValue"}
+                            classNames={{
+                                base: "w-full md:max-w-xs h-10",
+                                listboxWrapper: "max-h-[40px]",
+                                selectorButton: "text-default-500",
+                                inputWrapper: "md:rounded-full"
+                            }}
+                            inputProps={{
+                                classNames: {
+                                    input: "ml-1",
+                                    inputWrapper: "h-[48px]",
+                                },
+                            }}
+                            value={userFilterInput}
+                            onValueChange={setUserFilterInput}
+                            placeholder="Search this set"
+                            startContent={<MagnifyingGlassIcon className="text-default-400 fill-primary" height={20}
+                                                               strokeWidth={2.5}/>}
+                            variant="faded"
+                        />
+                        <div className={"flex flex-row w-full justify-between gap-2 overflow-scroll"} style={{scrollbarWidth: "none"}}>
+                            <Button onPress={onOpen}
                                     radius={"full"}
                                     className={"font-medium"}
-                                    onPress={() => setIsGridView(!isGridView)}
+                                    startContent={<AdjustmentsHorizontalIcon className="fill-inherit w-5"/>}
                             >
-                                Grid
+                                Filters {activeFiltersCount > 0 ? `(${activeFiltersCount})` : ""}
                             </Button>
-                            <Button isDisabled={!isGridView}
+                            <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
+                                <DrawerContent>
+                                    {(onClose) => (
+                                        <>
+                                            <DrawerHeader
+                                                className="flex flex-col gap-1 text-2xl">Filters</DrawerHeader>
+                                            <DrawerBody>
+                                                <CardsFilters filterOptions={filterOptions}
+                                                              activeFilters={activeFilters}
+                                                              setActiveFilters={setActiveFilters}
+                                                              handleApplyFilters={handleApplyFilters}
+                                                />
+                                            </DrawerBody>
+                                            <DrawerFooter>
+                                                <Button color="danger" variant="light" onPress={handleResetFilters}>
+                                                    Reset Filters
+                                                </Button>
+                                                <Button color="primary" onPress={onClose}>
+                                                    Apply Filters
+                                                </Button>
+                                            </DrawerFooter>
+                                        </>
+                                    )}
+                                </DrawerContent>
+                            </Drawer>
+                            <div className={"flex flex-row gap-4"}>
+                                <Select
+                                    label="Sort by:"
+                                    variant={"bordered"}
+                                    labelPlacement={"outside-left"}
+                                    selectedKeys={[selectedSort]}
+                                    onSelectionChange={handleSortChange}
+                                    disallowEmptySelection={true}
                                     radius={"full"}
-                                    className={"font-medium"}
-                                    onPress={() => setIsGridView(!isGridView)}
-                            >
-                                Table
-                            </Button>
-                        </ButtonGroup>
+                                    classNames={{
+                                        base: "w-full items-center",
+                                        label: "text-14 font-medium text-foreground-500 w-[6rem]",
+                                        value: "text-14 font-medium",
+                                        trigger: [
+                                            "shadow-none",
+                                            "data-[hover=true]:border-default-300",
+                                            "data-[focus=true]:border-default-300",
+                                            "data-[open=true]:border-default-300",
+                                        ],
+                                    }}
+                                >
+                                    {Object.values(sortOptions).map((option) => (
+                                        <SelectItem key={option.key}>{option.label}</SelectItem>
+                                    ))}
+                                </Select>
+                                <ButtonGroup>
+                                    <Button isDisabled={isGridView}
+                                            radius={"full"}
+                                            className={"font-medium"}
+                                            onPress={() => setIsGridView(!isGridView)}
+                                    >
+                                        Grid
+                                    </Button>
+                                    <Button isDisabled={!isGridView}
+                                            radius={"full"}
+                                            className={"font-medium"}
+                                            onPress={() => setIsGridView(!isGridView)}
+                                    >
+                                        Table
+                                    </Button>
+                                </ButtonGroup>
+                            </div>
+                        </div>
                     </div>
-                </div>
                 }
                 {(loading || setCardsLoading) ?
                     <CardsGridLoading/>
                     :
                     <>
                         {filteredCards.length === 0 &&
-                        (userFilterInput.length>0 || Object.values(activeFilters).some(arr => arr.length !== 0)) ?
-                            <EmptyFilteredResults handleResetFilters={handleResetFilters} titleMessage={"Sorry, we couldn't find any card"} />
+                        (userFilterInput.length > 0 || Object.values(activeFilters).some(arr => arr.length !== 0)) ?
+                            <EmptyFilteredResults handleResetFilters={handleResetFilters}
+                                                  titleMessage={"Sorry, we couldn't find any card"}/>
                             :
                             (isGridView ?
-                                <CardsGrid cards={filteredCards}/>
-                                :
-                                <CardsTable cards={filteredCards}/>
+                                    <CardsGrid cards={filteredCards}/>
+                                    :
+                                    <CardsTable cards={filteredCards}/>
                             )
                         }
                     </>
