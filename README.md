@@ -40,6 +40,6 @@ quali <a href="https://rarecandy.com"><b>Rare Candy</b></a>,
 Gli elementi di UI sono stati realizzati tramite la combinazione di <b>HeroUI</b>, a cui sono state effettuate modifiche stilistiche attraverso <b>TailwindCSS</b>.
 
 ## Documentazione
-La documentazione completa del progetto è visibile <a rel="nofollow" href="">qui</a>.
+La documentazione completa del progetto è visibile <a rel="nofollow" href="https://torch-radiator-610.notion.site/cardpal?pvs=73">qui</a>.
 
 

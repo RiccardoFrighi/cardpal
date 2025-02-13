@@ -5,6 +5,7 @@ const CardsFilters  = (props) => {
 
     const {filterOptions, activeFilters, setActiveFilters, handleApplyFilters} = props;
 
+    // Updates the activeFilters
     const handleChange = (filter, key) => {
         const prevState = activeFilters[key].includes(filter);
 
