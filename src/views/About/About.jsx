@@ -91,8 +91,8 @@ const About = () => {
                     Full documentation for the project is
                     available <Link isExternal
                                     className="mb-1 text-small font-normal md:text-medium"
-                                    href={"https://torch-radiator-610.notion.site/cardpal?pvs=73"}
-                    >here</Link>.
+                                    href={"https://torch-radiator-610.notion.site/cardpal?pvs=73"}>
+                    here</Link>.
                 </p>
             </section>
         </div>
