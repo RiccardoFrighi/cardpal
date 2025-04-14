@@ -13,7 +13,7 @@ This project was developed using <b>Vite</b>, a modern build tool that offers a 
 
 In addition, several modules were installed via NPM to implement both functionality and the visual aspects of the project.
 
-### Moduli NPM
+### NPM Modules
 - <a rel="nofollow" href="https://www.heroui.com"><b>HeroUI</b></a>: a modern library of React components designed to create accessible, customizable, and visually appealing user interfaces.
 - <a rel="nofollow" href="https://tailwindcss.com"><b>TailwindCSS</b></a>: a utility-first CSS framework that allows you to build custom user interfaces without writing custom CSS.
 - <a rel="nofollow" href="https://heroicons.com"><b>HeroIcons</b></a>: a collection of SVG icons designed to integrate seamlessly with Tailwind CSS.
@@ -26,7 +26,7 @@ The application uses <a href="https://pokemontcg.io"><b>Pokemon TCG API</b></a>,
 without the need for an API key, with a maximum of 1,000 requests per day and 30 requests per minute.
 
 
-## La UX/UI di CardPal
+## CardPal UX/UI
 CardPal takes inspiration from sites and applications currently on the market, such as: <a href="https://rarecandy.com"><b>Rare Candy</b></a>, 
 <a rel="nofollow" href="https://www.pkmn.gg"><b>pkmn.gg</b></a>, 
 <a rel="nofollow" href="https://www.tcg.gg/"><b>tcg.gg</b></a> e 
