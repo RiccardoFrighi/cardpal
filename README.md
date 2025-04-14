@@ -1,45 +1,39 @@
 # CardPal
-<a href="https://riccardofrighi.github.io/cardpal"><b>CardPal</b></a> 
-è una Web Application sviluppata in React per la visualizzazione di Trading Card Games
-(TCG), realizzata come progetto universitario per il corso di 
-<a rel="nofollow" href="https://elearning.unimib.it/course/info.php?id=57873#it">Applicazioni Web</a>
-dell'<a rel="nofollow" href="https://www.unimib.it/">Università degli studi di Milano-Bicocca</a> 
+<a href="https://riccardofrighi.github.io/cardpal"><b>CardPal</b></a>
+is a Web Application developed in ReactJS for displaying Trading Card Games (TCG),  created as a university project for the
+<a rel="nofollow" href="https://elearning.unimib.it/course/info.php?id=57873#it">Applicazioni Web</a> course
+of <a rel="nofollow" href="https://www.unimib.it/">Università degli studi di Milano-Bicocca</a> 
 2024/2025.
 
-Allo stato attuale l'applicazione consente la visualizzazione e la ricerca di carte Pokémon.
+The application currently allows viewing and searching for Pokémon cards.
 
-## Tecnologie
+## Technologies
 
-Per la realizzazione di questo progetto è stato utilizzato <b>Vite</b>, strumento
-che fornisce un’esperienza di sviluppo più veloce e snella per i progetti Web moderni.
+This project was developed using <b>Vite</b>, a modern build tool that offers a faster and more efficient development experience for web applications.
 
-Oltre a ciò, è stato fatto uso di diversi moduli, installati tramite NPM, per la realizzazione
-sia di funzionalità, sia della parte visiva del progetto.
+In addition, several modules were installed via NPM to implement both functionality and the visual aspects of the project.
 
 ### Moduli NPM
-- <a rel="nofollow" href="https://www.heroui.com"><b>HeroUI</b></a>: libreria di componenti React bella, veloce e moderna per creare applicazioni Web accessibili e personalizzabili.
-- <a rel="nofollow" href="https://tailwindcss.com"><b>TailwindCSS</b></a>: framework open source utility-first utilizzato per creare interfacce utente personalizzate consentendo la personalizzazione di elementi HTML senza CSS esterni.
-- <a rel="nofollow" href="https://heroicons.com"><b>HeroIcons</b></a>: libreria di icone SVG dai creatori di Tailwind CSS.
-- <a rel="nofollow" href="https://motion.dev"><b>Framer Motion</b></a>:popolare libreria JavaScript per la creazione di animazioni e transizioni nelle applicazioni React, fornisce un'API semplice e dichiarativa per aggiungere animazioni fluide
-- <a rel="nofollow" href="https://reactrouter.com"><b>React Router</b></a>: libreria per il routing nelle applicazioni React, consente di navigare tra diverse viste o componenti in applicazioni React.
-- <a rel="nofollow" href="https://pages.github.com/"><b>GitHub Pages</b></a>: servizio gratuito offerto da GitHub che consente di ospitare siti Web statici direttamente dal repository su GitHub.
+- <a rel="nofollow" href="https://www.heroui.com"><b>HeroUI</b></a>: a modern library of React components designed to create accessible, customizable, and visually appealing user interfaces.
+- <a rel="nofollow" href="https://tailwindcss.com"><b>TailwindCSS</b></a>: a utility-first CSS framework that allows you to build custom user interfaces without writing custom CSS.
+- <a rel="nofollow" href="https://heroicons.com"><b>HeroIcons</b></a>: a collection of SVG icons designed to integrate seamlessly with Tailwind CSS.
+- <a rel="nofollow" href="https://motion.dev"><b>Framer Motion</b></a>:popolare a powerful JavaScript library for handling animations in React, offering intuitive APIs to create smooth and interactive transitions.
+- <a rel="nofollow" href="https://reactrouter.com"><b>React Router</b></a>: the standard solution for routing in React applications, enabling smooth navigation between pages and components.
+- <a rel="nofollow" href="https://pages.github.com/"><b>GitHub Pages</b></a>: a free static hosting service provided by GitHub, ideal for deploying front-end applications directly from repositories.
 
-### API Utilizzate
-Per ottenere i dati da visualizzare è stata utilizzata <a href="https://pokemontcg.io"><b>Pokemon TCG API</b></a>, API REST che offre l'accesso ad un database
- di carte Pokémon senza necessità di alcuna chiave, ma con una tariffa limitata a 1.000 richieste al giorno, ed un massimo di 30 al minuto.
-
+### APIs Used
+The application uses <a href="https://pokemontcg.io"><b>Pokemon TCG API</b></a>, a REST API that provides access to a comprehensive database of Pokémon cards
+without the need for an API key, with a maximum of 1,000 requests per day and 30 requests per minute.
 
 
 ## La UX/UI di CardPal
-CardPal prende ispirazione da siti e applicazioni attualmente in commercio, 
-quali <a href="https://rarecandy.com"><b>Rare Candy</b></a>, 
+CardPal takes inspiration from sites and applications currently on the market, such as: <a href="https://rarecandy.com"><b>Rare Candy</b></a>, 
 <a rel="nofollow" href="https://www.pkmn.gg"><b>pkmn.gg</b></a>, 
 <a rel="nofollow" href="https://www.tcg.gg/"><b>tcg.gg</b></a> e 
 <a rel="nofollow" href="https://www.cardmarket.com/"><b>Cardmarket</b></a>.
+The UI elements were created by combining <b>HeroUI</b> with stylistic changes using <b>TailwindCSS</b> or dedicated CSS classes.
 
-Gli elementi di UI sono stati realizzati tramite la combinazione di <b>HeroUI</b>, a cui sono state effettuate modifiche stilistiche attraverso <b>TailwindCSS</b>.
 
-## Documentazione
-La documentazione completa del progetto è visibile <a rel="nofollow" href="https://torch-radiator-610.notion.site/cardpal?pvs=73"><b>qui</b></a>.
-
+## Documentation
+The complete documentation for the project can be found <a rel="nofollow" href="https://torch-radiator-610.notion.site/cardpal?pvs=73"><b>here</b></a>.
 
